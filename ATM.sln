@@ -10,6 +10,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{CFBA7BBB-9664-4F8B-8534-40D285E7353C}"
 	ProjectSection(SolutionItems) = preProject
 		dotCoverCoverageConfig.xml = dotCoverCoverageConfig.xml
+		TransponderReceiver.dll = TransponderReceiver.dll
 	EndProjectSection
 EndProject
 Global
