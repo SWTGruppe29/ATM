@@ -12,7 +12,10 @@ namespace ATM.Classes
 
         public int Tag { get; set; }
         public int Altitude { get; set; }
-        
-
+        public double XCoordinate { get; set; }
+        public double YCoordinate { get; set; }
+        public double CurrentCompCourse { get; set; }
+        public double Velocity { get; set; }
+       
     }
 }
