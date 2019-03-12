@@ -9,8 +9,16 @@ namespace ATM.Classes
 {
     public class ATMSystem : IATMSystem
     {
-        
+        private List<Track> Tracks;
 
+        public void AddTrack(ITrack track)
+        {
+            throw new NotImplementedException();
+        }
 
+        public void ReceiverOnTransponderReady()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

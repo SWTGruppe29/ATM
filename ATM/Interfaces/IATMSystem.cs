@@ -8,5 +8,7 @@ namespace ATM.Interfaces
 {
     public interface IATMSystem
     {
+        void AddTrack(ITrack track);
+        void ReceiverOnTransponderReady();
     }
 }
