@@ -42,9 +42,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\AirSpace.cs" />
-    <Compile Include="Application.cs" />
     <Compile Include="Classes\ATMSystem.cs" />
     <Compile Include="Classes\ConcreteAbstractATMFactory.cs" />
+    <Compile Include="Classes\ConsolePrinter.cs" />
     <Compile Include="Classes\Point.cs" />
     <Compile Include="Classes\SeparationCondition.cs" />
     <Compile Include="Classes\TrackCalculator.cs" />
@@ -58,6 +58,7 @@
     <Compile Include="Interfaces\ISeparationChecker.cs" />
     <Compile Include="Interfaces\ITrack.cs" />
     <Compile Include="Interfaces\ITrackCalculator.cs" />
+    <Compile Include="Interfaces\ItransponderReceiver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Classes\SeparationChecker.cs" />
     <Compile Include="Classes\Track.cs" />
