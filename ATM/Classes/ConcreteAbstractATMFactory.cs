@@ -7,7 +7,7 @@ using ATM.Interfaces;
 
 namespace ATM.Classes
 {
-    class ConcreteAbstractATMFactory : IAbstractATMFactory
+    public class ConcreteAbstractATMFactory : IAbstractATMFactory
     {
     }
 }
