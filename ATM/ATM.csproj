@@ -63,5 +63,11 @@
     <Compile Include="Classes\SeparationChecker.cs" />
     <Compile Include="Classes\Track.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ATMApplication\ATMApplication.csproj">
+      <Project>{fa46daa6-6d98-4850-9666-732655cab6df}</Project>
+      <Name>ATMApplication</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
