@@ -3,14 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ATM;
+using ATM.Classes;
 
-namespace ATM
+namespace ATMApplication
 {
-    public class Application
+    class Program
     {
-        static void Main()
+        static void Main(string[] args)
         {
-
+            
         }
     }
 }
