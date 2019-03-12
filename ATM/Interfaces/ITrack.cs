@@ -8,5 +8,6 @@ namespace ATM.Interfaces
 {
     public interface ITrack
     {
+        
     }
 }

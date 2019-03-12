@@ -15,5 +15,6 @@ namespace ATM.Classes
         public int YCoordinate { get; set; }
         public double CurrentCompCourse { get; set; }
         public double Velocity { get; set; }
+        public DateTime LastDateUpdate { get; set; }
     }
 }
