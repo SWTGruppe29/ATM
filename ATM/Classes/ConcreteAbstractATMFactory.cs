@@ -9,5 +9,6 @@ namespace ATM.Classes
 {
     public class ConcreteAbstractATMFactory : IAbstractATMFactory
     {
+
     }
 }

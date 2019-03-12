@@ -7,18 +7,25 @@ using ATM.Interfaces;
 
 namespace ATM.Classes
 {
-    public class ATMSystem : IATMSystem
+    public class ATMSystem : IATMSystem, ITrack, IAbstractATMFactory
     {
         private List<Track> Tracks;
+        private TrackCalculator calc;
 
         public void AddTrack(ITrack track)
         {
-            throw new NotImplementedException();
+            Tracks.Add(null);
         }
 
         public void ReceiverOnTransponderReady()
         {
             throw new NotImplementedException();
         }
+
+        
+
+        
+
+
     }
 }

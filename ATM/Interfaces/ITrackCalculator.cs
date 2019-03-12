@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace ATM.Interfaces
 {
-    interface ITrackCalculator
+    public interface ITrackCalculator
     {
+        double CalculateHorizontalVelocity(double Last_x, double Last_y, double New_x, double New_y);
+        double CalculateCompassCourse(double Last_x, double Last_y, double New_x, double New_y);
+
     }
 }
