@@ -7,7 +7,7 @@ using ATM.Interfaces;
 
 namespace ATM.Classes
 {
-    class ATMSystem : IATMSystem
+    public class ATMSystem : IATMSystem
     {
     }
 }

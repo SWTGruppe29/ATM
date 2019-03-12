@@ -9,11 +9,11 @@ namespace ATM.Classes
 {
     public class Track : ITrack
     {
-        public int Tag { get; set; }
+        public string Tag { get; set; }
         public int Altitude { get; set; }
         public int XCoordinate { get; set; }
         public int YCoordinate { get; set; }
-        public int CurrentCompCourse { get; set; }
-        public int Velocity { get; set; }
+        public double CurrentCompCourse { get; set; }
+        public double Velocity { get; set; }
     }
 }

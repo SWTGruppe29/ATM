@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ATM.Classes
 {
-    class TrackCalculator
+    public class TrackCalculator
     {
     }
 }
