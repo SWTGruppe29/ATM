@@ -45,6 +45,7 @@
     <Compile Include="Application.cs" />
     <Compile Include="Classes\ATMSystem.cs" />
     <Compile Include="Classes\ConcreteAbstractATMFactory.cs" />
+    <Compile Include="Classes\TrackCalculator.cs" />
     <Compile Include="Interfaces\IAbstractATMFactory.cs" />
     <Compile Include="Interfaces\IAirSpace.cs" />
     <Compile Include="Interfaces\IATMSystem.cs" />
@@ -53,6 +54,7 @@
     <Compile Include="Classes\Logger.cs" />
     <Compile Include="Interfaces\ISeparationChecker.cs" />
     <Compile Include="Interfaces\ITrack.cs" />
+    <Compile Include="Interfaces\ITrackCalculator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Classes\SeparationChecker.cs" />
     <Compile Include="Classes\Track.cs" />
