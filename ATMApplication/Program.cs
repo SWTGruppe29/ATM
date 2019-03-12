@@ -17,7 +17,7 @@ namespace ATMApplication
             
             _calc = new TrackCalculator();
             
-            double res = _calc.CalculateCompassCourse(10, 20, 5, 10);
+            double res = _calc.CalculateCompassCourse(40, 40, 20, 20);
             Console.WriteLine(res);
             Console.ReadKey();
         }

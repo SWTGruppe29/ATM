@@ -22,8 +22,11 @@ namespace ATMUnitTest
         }
 
         
-        [TestCase(58416, 94744, 58409, 94876)]
-        [TestCase(58423, 94612, 58416, 94744,22)]
+        [TestCase(60000, 60000, 30000, 30000,225)]
+        [TestCase(30000, 30000, 60000, 60000, 45)]
+        [TestCase(10000,40000,40000,10000,135)]
+        [TestCase(40000,10000,10000,40000,315)]
+        
         public void TestCalcDegress(double Last_x, double Last_y, double New_x, double New_y, double result)
         {
             

@@ -19,16 +19,23 @@ namespace ATM.Classes
         public double CalculateCompassCourse(double Last_x, double Last_y, double New_x, double New_y)
         {
             double deltaY = New_y - Last_y;
-            double deltaX = New_x - New_y;
+            double deltaX = New_x - Last_x;
 
-            double angle = Math.Atan2(deltaY, deltaX) * 180 / Math.PI;
+            double angle = Math.Atan2(deltaY, deltaX) * (180 / Math.PI);
+
+            angle = 360 - ((angle) - 90);
 
             if (angle < 0)
             {
-                angle += 2*Math.PI;
+                angle += 360;
             }
-            
-            return (360-(Trim(angle)-90));
+
+            if (angle > 360)
+            {
+                angle -= 360;
+            }
+
+            return Trim(angle);
         }
 
         public double Trim(double deg)
