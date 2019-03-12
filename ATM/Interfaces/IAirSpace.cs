@@ -8,5 +8,11 @@ namespace ATM.Interfaces
 {
     public interface IAirSpace
     {
+        int getWestBoundary();
+        int getEastBoundary();
+        int getNorthBoundary();
+        int getSouthBoundary();
+        int getUpperBoundary();
+        int getLowerBoundary();
     }
 }
