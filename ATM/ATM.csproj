@@ -45,6 +45,7 @@
     <Compile Include="Application.cs" />
     <Compile Include="Classes\ATMSystem.cs" />
     <Compile Include="Classes\ConcreteAbstractATMFactory.cs" />
+    <Compile Include="Classes\ConsolePrinter.cs" />
     <Compile Include="Classes\TrackCalculator.cs" />
     <Compile Include="Interfaces\IAbstractATMFactory.cs" />
     <Compile Include="Interfaces\IAirSpace.cs" />
