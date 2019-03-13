@@ -15,6 +15,7 @@ namespace ATM.Classes
         private ITransponderReceiver receiver;
         private AirSpace airspace;
         private List<string> datastring;
+        private List<object> objectlist;
         
         
 
@@ -32,6 +33,7 @@ namespace ATM.Classes
             foreach (var data in e.TransponderData)
             {
                 List(data);
+                
             }
 
             //makes Track
@@ -49,10 +51,20 @@ namespace ATM.Classes
         {
             datastring = s.Split(';').Reverse().ToList<string>();
             datastring.Reverse();
-
-            
         }
-        
+
+        public void TypeConverter()
+        {
+            objectlist[0] = datastring[0];
+            Int32.TryParse(datastring[1], out int x);
+            objectlist[1] = x;
+            Int32.TryParse(datastring[2], out int y);
+            objectlist[2] = y;
+            Int32.TryParse(datastring[2], out int alt);
+            objectlist[3] = alt;
+
+
+        }
         
 
         
