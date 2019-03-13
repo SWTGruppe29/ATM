@@ -10,9 +10,16 @@ namespace ATMApplication
 {
     class Program
     {
-        static void Main(string[] args)
+        private static TrackCalculator _calc;
+
+        public static void Main(string[] args)
         {
             
+            _calc = new TrackCalculator();
+            
+            double res = _calc.CalculateCompassCourse(40, 40, 20, 20);
+            Console.WriteLine(res);
+            Console.ReadKey();
         }
     }
 }
