@@ -54,13 +54,25 @@ namespace ATM.Classes
             }
         }
 
+        private double convertToAngle(double compasCourse)
+        {
+            double angle = compasCourse + 90;
+            if (angle > 360)
+            {
+                angle = angle - 360;
+                return angle;
+            }
+
+            return angle;
+        }
+
         private Point calculateEndPoint(Track track, Direction d)
         {
             switch (d)
             {
                 case Direction.east:
                     int toEast = _airSpace.getEastBoundary() - track.XCoordinate;
-                    int e = Convert.ToInt32(Math.Tan(track.CurrentCompCourse) * toEast); //SKAL UNDERSØGES OM DEN VIRKER!!!!!
+                    int e = Convert.ToInt32(Math.Tan(convertToAngle(track.CurrentCompCourse)) * toEast); //SKAL UNDERSØGES OM DEN VIRKER!!!!!
                     if (track.CurrentCompCourse < 90)
                     {
                         return new Point(80000, track.YCoordinate + e);
