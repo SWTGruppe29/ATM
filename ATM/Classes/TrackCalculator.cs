@@ -20,11 +20,10 @@ namespace ATM.Classes
             P2 = new Point(New_x,New_y);
 
         }
-
-
+        
         public double CalculateHorizontalVelocity()
         {
-            return 123123;
+            return 123123; 
         }
 
         public double CalculateCompassCourse()

@@ -274,8 +274,8 @@ namespace ATM.Classes
 
         private bool hasConflict(Track track1, Track track2)
         {
-            if (track1.CurrentCompCourse == 0.0 | track1.Velocity == 0.0 | track2.Velocity == 0.0 |
-                track2.CurrentCompCourse == 0.0)                                                       //No information on current course or velocity
+            if (track1.CurrentCompCourse == null | track1.Velocity == null | track2.Velocity == null |
+                track2.CurrentCompCourse == null)                                                       //No information on current course or velocity
             {
                 return false;
             }

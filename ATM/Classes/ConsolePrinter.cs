@@ -38,7 +38,7 @@ namespace ATM.Classes
             }
             Console.WriteLine();
 
-            if (!conflictTags.Any())
+            if (conflictTags == null)
             {
                 Console.WriteLine("No Airplanes in conflict");
                 return;
