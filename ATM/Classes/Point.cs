@@ -6,8 +6,12 @@ using System.Threading.Tasks;
 
 namespace ATM.Classes
 {
-    class Point
+    public class Point
     {
+        public Point()
+        {
+        }
+
         public Point(int x, int y)
         {
             Y = y;

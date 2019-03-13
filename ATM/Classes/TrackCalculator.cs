@@ -11,15 +11,28 @@ namespace ATM.Classes
 {
     public class TrackCalculator : ITrackCalculator
     {
-        public double CalculateHorizontalVelocity(double Last_x, double Last_y, double New_x, double New_y)
+        
+        private DateTime dt1, dt2;
+
+        public TrackCalculator()
         {
-            return Last_y;
+            P1 = new Point();
+            P2 = new Point();
+            
+
+
         }
 
-        public double CalculateCompassCourse(double Last_x, double Last_y, double New_x, double New_y)
+
+        public double CalculateHorizontalVelocity()
         {
-            double deltaY = New_y - Last_y;
-            double deltaX = New_x - Last_x;
+            return 123123;
+        }
+
+        public double CalculateCompassCourse()
+        {
+            double deltaY = P2.Y - P1.Y;
+            double deltaX = P2.X - P1.X;
 
             double angle = Math.Atan2(deltaY, deltaX) * (180 / Math.PI);
 
@@ -42,5 +55,27 @@ namespace ATM.Classes
         {
             return (Math.Round(deg, 5));
         }
+
+        public double Distance()
+        {
+            double deltaY = P2.Y - P1.Y;
+            double deltaX = P2.X - P1.X;
+
+            return Math.Sqrt(deltaX * deltaX + deltaY * deltaY);
+        }
+
+
+        #region properties
+
+        public Point P1 { get; set; }
+
+        public Point P2
+        {
+            get => P2;
+            set => P1 = value;
+        }
+
+        #endregion
     }
+
 }

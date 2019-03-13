@@ -27,10 +27,14 @@ namespace ATMUnitTest
         [TestCase(10000,40000,40000,10000,135)]
         [TestCase(40000,10000,10000,40000,315)]
         
-        public void TestCalcDegress(double Last_x, double Last_y, double New_x, double New_y, double result)
+        public void TestCalcDegress(int Last_x, int Last_y, int New_x, int New_y, double result)
         {
-            
-            Assert.That(_uut.CalculateCompassCourse(Last_x, Last_y, New_x, New_y),Is.EqualTo(result));
+            _uut.P1.X = Last_x;
+            _uut.P1.Y = Last_y;
+            _uut.P2.X = New_x;
+            _uut.P2.Y = New_y;
+
+            Assert.That(_uut.CalculateCompassCourse(),Is.EqualTo(result));
         }
     }
 }

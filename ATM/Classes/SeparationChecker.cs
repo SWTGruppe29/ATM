@@ -54,78 +54,78 @@ namespace ATM.Classes
             }
         }
 
-        private Point calculateEndPoint(Track track, Direction d)
-        {
-            switch (d)
-            {
-                case Direction.east:
-                    int toEast = _airSpace.getEastBoundary() - track.XCoordinate;
-                    int e = Convert.ToInt32(Math.Tan(track.CurrentCompCourse) * toEast); //SKAL UNDERSØGES OM DEN VIRKER!!!!!
-                    if (track.CurrentCompCourse < 90)
-                    {
-                        return new Point(80000, track.YCoordinate + e);
-                    }
-                    else if (track.CurrentCompCourse > 90)
-                    {
-                        return new Point(80000, track.YCoordinate - e);
-                    }
-                    else
-                    {
-                        return new Point(80000,track.YCoordinate);
-                    }
-                    break;
-                case Direction.west:
-                    int toWest = track.XCoordinate;
-                    int w = Convert.ToInt32(Math.Tan(track.CurrentCompCourse) * toWest); //SKAL UNDERSØGES OM DEN VIRKER!!!!!
-                    if (track.CurrentCompCourse < 270)
-                    {
-                        return new Point(80000, track.YCoordinate + w);
-                    }
-                    else if (track.CurrentCompCourse > 270)
-                    {
-                        return new Point(80000, track.YCoordinate - w);
-                    }
-                    else
-                    {
-                        return new Point(0, track.YCoordinate);
-                    }
-                    break;
-                case Direction.north:
-                    int toNorth = _airSpace.getNorthBoundary() - track.YCoordinate;
-                    int n = Convert.ToInt32(Math.Tan(track.CurrentCompCourse) * toNorth); //SKAL UNDERSØGES OM DEN VIRKER!!!!!
-                    if (track.CurrentCompCourse < 360)
-                    {
-                        return new Point(track.XCoordinate - n, 80000);
-                    }
-                    else if (track.CurrentCompCourse > 0)
-                    {
-                        return new Point(track.XCoordinate + n, 80000);
-                    }
-                    else
-                    {
-                        return new Point(track.XCoordinate, 80000);
-                    }
-                    break;
-                case Direction.south:
-                    int toSouth = track.YCoordinate;
-                    int s = Convert.ToInt32(Math.Tan(track.CurrentCompCourse) * toSouth); //SKAL UNDERSØGES OM DEN VIRKER!!!!!
-                    if (track.CurrentCompCourse < 180)
-                    {
-                        return new Point(track.XCoordinate + s, 80000);
-                    }
-                    else if (track.CurrentCompCourse > 180)
-                    {
-                        return new Point(track.XCoordinate - s, 80000);
-                    }
-                    else
-                    {
-                        return new Point(track.XCoordinate, 80000);
-                    }
-                    break;
-                default:
-                    return null;
-            }
-        }
+        //private Point calculateEndPoint(Track track, Direction d)
+        //{
+        //    switch (d)
+        //    {
+        //        case Direction.east:
+        //            int toEast = _airSpace.getEastBoundary() - track.XCoordinate;
+        //            int e = Convert.ToInt32(Math.Tan(track.CurrentCompCourse) * toEast); //SKAL UNDERSØGES OM DEN VIRKER!!!!!
+        //            if (track.CurrentCompCourse < 90)
+        //            {
+        //                return new Point(80000, track.YCoordinate + e);
+        //            }
+        //            else if (track.CurrentCompCourse > 90)
+        //            {
+        //                return new Point(80000, track.YCoordinate - e);
+        //            }
+        //            else
+        //            {
+        //                return new Point(80000,track.YCoordinate);
+        //            }
+        //            break;
+        //        case Direction.west:
+        //            int toWest = track.XCoordinate;
+        //            int w = Convert.ToInt32(Math.Tan(track.CurrentCompCourse) * toWest); //SKAL UNDERSØGES OM DEN VIRKER!!!!!
+        //            if (track.CurrentCompCourse < 270)
+        //            {
+        //                return new Point(80000, track.YCoordinate + w);
+        //            }
+        //            else if (track.CurrentCompCourse > 270)
+        //            {
+        //                return new Point(80000, track.YCoordinate - w);
+        //            }
+        //            else
+        //            {
+        //                return new Point(0, track.YCoordinate);
+        //            }
+        //            break;
+        //        case Direction.north:
+        //            int toNorth = _airSpace.getNorthBoundary() - track.YCoordinate;
+        //            int n = Convert.ToInt32(Math.Tan(track.CurrentCompCourse) * toNorth); //SKAL UNDERSØGES OM DEN VIRKER!!!!!
+        //            if (track.CurrentCompCourse < 360)
+        //            {
+        //                return new Point(track.XCoordinate - n, 80000);
+        //            }
+        //            else if (track.CurrentCompCourse > 0)
+        //            {
+        //                return new Point(track.XCoordinate + n, 80000);
+        //            }
+        //            else
+        //            {
+        //                return new Point(track.XCoordinate, 80000);
+        //            }
+        //            break;
+        //        case Direction.south:
+        //            int toSouth = track.YCoordinate;
+        //            int s = Convert.ToInt32(Math.Tan(track.CurrentCompCourse) * toSouth); //SKAL UNDERSØGES OM DEN VIRKER!!!!!
+        //            if (track.CurrentCompCourse < 180)
+        //            {
+        //                return new Point(track.XCoordinate + s, 80000);
+        //            }
+        //            else if (track.CurrentCompCourse > 180)
+        //            {
+        //                return new Point(track.XCoordinate - s, 80000);
+        //            }
+        //            else
+        //            {
+        //                return new Point(track.XCoordinate, 80000);
+        //            }
+        //            break;
+        //        default:
+        //            return null;
+        //    }
+        //}
 
         private bool willIntersect(Point p1Start, Point p1End, Point p2Start, Point p2End)
         {
