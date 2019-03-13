@@ -14,12 +14,6 @@ namespace ATMUnitTest
     public class Class1
     {
         private TrackCalculator _uut;
-        
-        [SetUp]
-        public void Setup()
-        {
-            _uut = new TrackCalculator();
-        }
 
         
         [TestCase(60000, 60000, 30000, 30000,225)]
@@ -29,10 +23,7 @@ namespace ATMUnitTest
         
         public void TestCalcDegress(int Last_x, int Last_y, int New_x, int New_y, double result)
         {
-            _uut.P1.X = Last_x;
-            _uut.P1.Y = Last_y;
-            _uut.P2.X = New_x;
-            _uut.P2.Y = New_y;
+            _uut = new TrackCalculator(Last_x,Last_y,New_x,New_y);
 
             Assert.That(_uut.CalculateCompassCourse(),Is.EqualTo(result));
         }

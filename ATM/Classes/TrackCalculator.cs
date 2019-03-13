@@ -14,12 +14,10 @@ namespace ATM.Classes
         
         private DateTime dt1, dt2;
 
-        public TrackCalculator()
+        public TrackCalculator(int Last_x, int Last_y, int New_x, int New_y)
         {
-            P1 = new Point();
-            P2 = new Point();
-            
-
+            P1 = new Point(Last_x,Last_y);
+            P2 = new Point(New_x,New_y);
 
         }
 
@@ -69,13 +67,9 @@ namespace ATM.Classes
 
         public Point P1 { get; set; }
 
-        public Point P2
-        {
-            get => P2;
-            set => P1 = value;
-        }
+        public Point P2 { get; set; }
 
-        #endregion
-    }
+    #endregion
+}
 
 }
