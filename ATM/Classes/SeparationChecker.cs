@@ -72,7 +72,7 @@ namespace ATM.Classes
             {
                 case Direction.east:
                     int toEast = _airSpace.getEastBoundary() - track.XCoordinate;
-                    int e = Convert.ToInt32(Math.Tan(convertToAngle(track.CurrentCompCourse)) * toEast); //SKAL UNDERSØGES OM DEN VIRKER!!!!!
+                    int e = Convert.ToInt32(Math.Tan(convertToAngle((double) track.CurrentCompCourse)) * toEast); //SKAL UNDERSØGES OM DEN VIRKER!!!!!
                     if (track.CurrentCompCourse < 90)
                     {
                         return new Point(80000, track.YCoordinate + e);
@@ -88,7 +88,7 @@ namespace ATM.Classes
                     break;
                 case Direction.west:
                     int toWest = track.XCoordinate;
-                    int w = Convert.ToInt32(Math.Tan(track.CurrentCompCourse) * toWest); //SKAL UNDERSØGES OM DEN VIRKER!!!!!
+                    int w = Convert.ToInt32(Math.Tan(convertToAngle((double)track.CurrentCompCourse)) * toWest); //SKAL UNDERSØGES OM DEN VIRKER!!!!!
                     if (track.CurrentCompCourse < 270)
                     {
                         return new Point(80000, track.YCoordinate + w);
@@ -104,7 +104,7 @@ namespace ATM.Classes
                     break;
                 case Direction.north:
                     int toNorth = _airSpace.getNorthBoundary() - track.YCoordinate;
-                    int n = Convert.ToInt32(Math.Tan(track.CurrentCompCourse) * toNorth); //SKAL UNDERSØGES OM DEN VIRKER!!!!!
+                    int n = Convert.ToInt32(Math.Tan(convertToAngle((double)track.CurrentCompCourse) * toNorth)); //SKAL UNDERSØGES OM DEN VIRKER!!!!!
                     if (track.CurrentCompCourse < 360)
                     {
                         return new Point(track.XCoordinate - n, 80000);
@@ -120,7 +120,7 @@ namespace ATM.Classes
                     break;
                 case Direction.south:
                     int toSouth = track.YCoordinate;
-                    int s = Convert.ToInt32(Math.Tan(track.CurrentCompCourse) * toSouth); //SKAL UNDERSØGES OM DEN VIRKER!!!!!
+                    int s = Convert.ToInt32(Math.Tan(convertToAngle((double)track.CurrentCompCourse)) * toSouth); //SKAL UNDERSØGES OM DEN VIRKER!!!!!
                     if (track.CurrentCompCourse < 180)
                     {
                         return new Point(track.XCoordinate + s, 80000);
@@ -274,8 +274,8 @@ namespace ATM.Classes
 
         private bool hasConflict(Track track1, Track track2)
         {
-            if (track1.CurrentCompCourse == 0.0 | track1.Velocity == 0.0 | track2.Velocity == 0.0 |
-                track2.CurrentCompCourse == 0.0)                                                       //No information on current course or velocity
+            if (track1.CurrentCompCourse == null | track1.Velocity == null | track2.Velocity == null |
+                track2.CurrentCompCourse == null)                                                       //No information on current course or velocity
             {
                 return false;
             }
