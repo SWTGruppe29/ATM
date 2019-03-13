@@ -22,11 +22,10 @@ namespace ATM.Classes
 
 
         }
-
-
+        
         public double CalculateHorizontalVelocity()
         {
-            return 123123;
+            return 123123; 
         }
 
         public double CalculateCompassCourse()
