@@ -15,6 +15,9 @@ namespace ATM.Classes
         private TrackCalculator calc;
         private List<string> datastring;
         private List<object> objectlist;
+        private DateTime dateTimeNew;
+        private string flightNum;
+        private Track newTrack;
 
         private ITransponderReceiver receiver;
         private IAirSpace _airSpace;
@@ -23,12 +26,15 @@ namespace ATM.Classes
         private ILogger _logger;
         private ISeparationChecker _separationChecker;
         private ITrackCalculator _calc;
-        
+        private ITransponderReceiver receiver;
+
+        public event EventHandler SeparationLogDataReady;
 
         public ATMSystem(ITransponderReceiver receiver)
         {
             this.receiver = receiver;
             this.receiver.TransponderDataReady += ReceiverOnTransponderReady;
+            this.SeparationLogDataReady();
         }
 
         /// <summary>
@@ -53,15 +59,17 @@ namespace ATM.Classes
             this.receiver = receiver;
             this.receiver.TransponderDataReady += ReceiverOnTransponderReady;
 
-            _airSpace = airspace;
+            _airspace = airspace;
             _condition = condition;
             _consolePrinter = consolePrinter;
             _logger = logger;
             _separationChecker = separationChecker;
             _calc = trackCalculator;
             datastring = new List<string>() {""};
+            airSpace = new AirSpace(10000,90000,90000,10000,20000,500);
             //checkSepa = new SeparationChecker(airSpace,);
         }
+
 
         private void ReceiverOnTransponderReady(object sender, RawTransponderDataEventArgs e)
         {
@@ -84,7 +92,7 @@ namespace ATM.Classes
 
                     calc = new TrackCalculator(Tracks[index].XCoordinate, Tracks[index].YCoordinate, x, y,
                         Tracks[index].LastDateUpdate, dateTimeNew);
-                    Track newTrack = new Track(flightNum, x, y, alt, dateTimeNew, calc.CalculateCompassCourse(),
+                    newTrack = new Track(flightNum, x, y, alt, dateTimeNew, calc.CalculateCompassCourse(),
                         calc.CalculateHorizontalVelocity());
                     Tracks[index] = newTrack;
                 }
@@ -94,7 +102,11 @@ namespace ATM.Classes
                     Tracks.Add(newTrack);
                 }
 
-                
+                _separationChecker = new SeparationChecker(_airspace,_condition);
+                if (_separationChecker.CheckForSeparation(Tracks, newTrack).Count > 0)
+                {
+
+                }
             }
 
         }
