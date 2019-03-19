@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing.Text;
 using System.Linq;
 using System.Numerics;
 using System.Text;
@@ -11,19 +12,29 @@ namespace ATM.Classes
 {
     public class TrackCalculator : ITrackCalculator
     {
-        
-        private DateTime dt1, dt2;
+        private double distance;
+        private DateTime _dt1, _dt2;
 
-        public TrackCalculator(int Last_x, int Last_y, int New_x, int New_y)
+        public TrackCalculator()
+        {
+        }
+
+        public TrackCalculator(int Last_x, int Last_y, int New_x, int New_y , DateTime dt1, DateTime dt2)
         {
             P1 = new Point(Last_x,Last_y);
             P2 = new Point(New_x,New_y);
-
+            _dt1 = new DateTime();
+            _dt2 = new DateTime();
+            _dt1 = dt1;
+            _dt2 = dt2;
         }
         
         public double CalculateHorizontalVelocity()
         {
-            return 123123; 
+            distance = Distance();
+            TimeSpan tsSpan = _dt2.Subtract(_dt1);
+
+            return distance/tsSpan.TotalSeconds;
         }
 
         public double CalculateCompassCourse()
