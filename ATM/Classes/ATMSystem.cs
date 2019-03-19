@@ -79,7 +79,6 @@ namespace ATM.Classes
             foreach (var data in e.TransponderData)
             {
                 List(data);
-               
             }
 
             for (int i = 0; i < datastring.Count; i++)
@@ -93,7 +92,7 @@ namespace ATM.Classes
             //TypeConverter();
 
 
-            if (_airSpace.IsInAirSpace(x, y))
+            if (_airSpace.IsInAirSpace(x, y,alt))
             {
                 int index = CheckIfTrackIsInList(flightNum);
                 if (index > 0)
