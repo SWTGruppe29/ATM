@@ -54,7 +54,7 @@ namespace ATM.Classes
 
         public void ConsoleSeparationDataHandler(object sender, ConsoleSeparationEventArgs args)
         {
-            throw new NotImplementedException();
+            Print(args.tracks, args.conflictList);
         }
     }
 }

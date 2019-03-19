@@ -10,7 +10,7 @@ namespace ATM.Interfaces
     public class ConsoleSeparationEventArgs
     {
         public List<Track> tracks { get; set; }
-        public List<string> conflictList { get; set; }
+        public List<Conflict> conflictList { get; set; }
     }
     public interface IConsolePrinter
     {
