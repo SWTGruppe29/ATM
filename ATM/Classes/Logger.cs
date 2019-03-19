@@ -21,8 +21,9 @@ namespace ATM.Classes
             //Find the path of the project
             string ProjectDirectory = System.AppContext.BaseDirectory;
 
+            string timeStamp = DateTime.Now.ToLongTimeString();
             //Combine the path and .txt file 
-            string fullPath = Path.Combine(ProjectDirectory, "SeparationLog.txt");
+            string fullPath = Path.Combine(ProjectDirectory, "SeparationLog" + timeStamp + ".txt");
 
             var occurenceTime = DateTime.Now;
 
@@ -49,6 +50,16 @@ namespace ATM.Classes
                     writeText.WriteLine();
                 }
             }
+        }
+
+        public void SeparationLogDataHandler(object sender, SeparationLogEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SeparationLogDataHandler(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
         }
     }
 }

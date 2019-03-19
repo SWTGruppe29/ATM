@@ -26,7 +26,6 @@ namespace ATM.Classes
         private ILogger _logger;
         private ISeparationChecker _separationChecker;
         private ITrackCalculator _calc;
-        private ITransponderReceiver receiver;
 
         public event EventHandler SeparationLogDataReady;
 
@@ -59,15 +58,13 @@ namespace ATM.Classes
             this.receiver = receiver;
             this.receiver.TransponderDataReady += ReceiverOnTransponderReady;
 
-            _airspace = airspace;
+            _airSpace = airspace;
             _condition = condition;
             _consolePrinter = consolePrinter;
             _logger = logger;
             _separationChecker = separationChecker;
             _calc = trackCalculator;
             datastring = new List<string>() {""};
-            airSpace = new AirSpace(10000,90000,90000,10000,20000,500);
-            //checkSepa = new SeparationChecker(airSpace,);
         }
 
 
@@ -102,7 +99,7 @@ namespace ATM.Classes
                     Tracks.Add(newTrack);
                 }
 
-                _separationChecker = new SeparationChecker(_airspace,_condition);
+                _separationChecker = new SeparationChecker(_airSpace,_condition);
                 if (_separationChecker.CheckForSeparation(Tracks, newTrack).Count > 0)
                 {
 
@@ -144,23 +141,10 @@ namespace ATM.Classes
 
         private void TypeConverter()
         {
-
                 Int32.TryParse(datastring[1], out x);
                 Int32.TryParse(datastring[2], out y);
                 Int32.TryParse(datastring[3], out alt);
-                dateConverter();
-            
+                dateConverter();   
         }
-        
-
-        
-
-       
-
-        
-
-        
-
-
     }
 }
