@@ -27,6 +27,14 @@ namespace ATM.Classes
             lowerBoundary = l;
         }
 
+        public bool IsInAirSpace(int x, int y)
+        {
+            if (x >= 10000 && x <= 90000 && y >= 10000 && y <= 90000)
+                return true;
+            else
+                return false;
+        }
+
         public int getWestBoundary()
         {
             return westBoundary;

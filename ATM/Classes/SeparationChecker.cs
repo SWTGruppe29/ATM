@@ -11,7 +11,8 @@ namespace ATM.Classes
 {
     public class SeparationChecker : ISeparationChecker
     {
-        private enum Direction {north,south,east,west};
+        /*
+        public enum Direction {north,south,east,west};
         private IAirSpace _airSpace;
         private ICondition _separationCondition;
 
@@ -19,22 +20,22 @@ namespace ATM.Classes
         {
             _airSpace = airSpace;
             _separationCondition = separationCondition;
-        }
+        }*/
 
-        private int AltitudeSeparation(int t1, int t2) 
+        public int AltitudeSeparation(int t1, int t2) 
         {
             int sep = Math.Abs(t1 - t2);
             return sep;
         }
 
-        private double distanceBetween(int x1, int y1, int x2, int y2)
+        public double distanceBetweenTracks(Track track1, Track track2)
         {
-            int dY = Math.Abs(y1 - y2);
-            int dX = Math.Abs(x1 - x2);
+            int dY = Math.Abs(track1.YCoordinate - track2.YCoordinate);
+            int dX = Math.Abs(track1.XCoordinate -track2.XCoordinate);
             return Math.Sqrt((dY * dY) + (dX * dX));
         }
-
-        private Direction calculateDirection(Track track1)
+        /*
+        public Direction calculateDirection(Track track1)
         {
             if (track1.CurrentCompCourse >= 45 && track1.CurrentCompCourse < 135) //Eastbound course
             {
@@ -54,7 +55,7 @@ namespace ATM.Classes
             }
         }
 
-        private double convertToAngle(double compasCourse)
+        public double convertToAngle(double compasCourse)
         {
             double angle = compasCourse + 90;
             if (angle > 360)
@@ -66,7 +67,7 @@ namespace ATM.Classes
             return angle;
         }
 
-        private Point calculateEndPoint(Track track, Direction d)
+        public Point calculateEndPoint(Track track, Direction d)
         {
             switch (d)
             {
@@ -139,7 +140,7 @@ namespace ATM.Classes
             }
         }
 
-        private bool willIntersect(Point p1Start, Point p1End, Point p2Start, Point p2End)
+        public bool willIntersect(Point p1Start, Point p1End, Point p2Start, Point p2End)
         {
             float dx12 = Math.Abs(p1End.X - p1Start.X);
             float dy12 = Math.Abs(p1End.Y - p1Start.Y);
@@ -161,7 +162,7 @@ namespace ATM.Classes
             return true;
         }
 
-        private double FindDistanceToSegment(Point point, Point lineStart, Point lineEnd)
+        public double FindDistanceToSegment(Point point, Point lineStart, Point lineEnd)
         {
             float dx = lineEnd.X - lineStart.X;
             float dy = lineEnd.Y - lineStart.Y;
@@ -200,7 +201,7 @@ namespace ATM.Classes
         }
 
 
-        private bool tracksWillConflict(Point p1Start, Point p1End, Point p2Start, Point p2End)
+        public bool tracksWillConflict(Point p1Start, Point p1End, Point p2Start, Point p2End)
         {
             Point closest;
             double best_dist = double.MaxValue, test_dist;
@@ -235,7 +236,7 @@ namespace ATM.Classes
 
             return (best_dist < _separationCondition.getHorizontalSeparationCondition());
         }
-        private bool willHaveConflict(Track track1, Track track2)
+        public bool willHaveConflict(Track track1, Track track2)
         {
             Direction t1D = calculateDirection(track1);
             Direction t2D = calculateDirection(track2);
@@ -254,9 +255,9 @@ namespace ATM.Classes
 
             return false;
 
-        }
+        }*/
 
-        private bool horizontalSeparationConflict(Track track1, Track track2)
+        public bool horizontalSeparationConflict(Track track1, Track track2)
         {
             if (distanceBetween(track1.XCoordinate, track1.YCoordinate, track2.XCoordinate, track2.YCoordinate) < //Checks for current distance between tracks
             _separationCondition.getHorizontalSeparationCondition())
@@ -272,7 +273,7 @@ namespace ATM.Classes
         }
 
 
-        private bool hasConflict(Track track1, Track track2)
+        public bool hasConflict(Track track1, Track track2)
         {
             if (track1.CurrentCompCourse == null | track1.Velocity == null | track2.Velocity == null |
                 track2.CurrentCompCourse == null)                                                       //No information on current course or velocity
