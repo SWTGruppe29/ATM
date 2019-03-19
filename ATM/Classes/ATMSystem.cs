@@ -26,12 +26,14 @@ namespace ATM.Classes
         private ISeparationChecker _separationChecker;
         private ITrackCalculator _calc;
         private ITransponderReceiver receiver;
-        
+
+        public event EventHandler SeparationLogDataReady;
 
         public ATMSystem(ITransponderReceiver receiver)
         {
             this.receiver = receiver;
             this.receiver.TransponderDataReady += ReceiverOnTransponderReady;
+            this.SeparationLogDataReady();
         }
 
         /// <summary>
@@ -55,6 +57,8 @@ namespace ATM.Classes
         {
             this.receiver = receiver;
             this.receiver.TransponderDataReady += ReceiverOnTransponderReady;
+            this.SeparationLogDataReady += _logger.SeparationLogDataHandler;
+            
 
             _airspace = airspace;
             _condition = condition;
@@ -66,6 +70,7 @@ namespace ATM.Classes
             _airspace = new AirSpace(10000,90000,90000,10000,20000,500);
             //checkSepa = new SeparationChecker(airSpace,);
         }
+
 
         private void ReceiverOnTransponderReady(object sender, RawTransponderDataEventArgs e)
         {
