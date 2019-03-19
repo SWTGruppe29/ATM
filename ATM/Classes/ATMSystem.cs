@@ -27,13 +27,15 @@ namespace ATM.Classes
         private ISeparationChecker _separationChecker;
         private ITrackCalculator _calc;
 
-        public event EventHandler SeparationLogDataReady;
+        public event EventHandler<SeparationLogEventArgs> SeparationLogDataReady;
+        public event EventHandler<ConsoleSeparationEventArgs> ConsoleSeparationDataReady;
 
         public ATMSystem(ITransponderReceiver receiver)
         {
             this.receiver = receiver;
             this.receiver.TransponderDataReady += ReceiverOnTransponderReady;
-            this.SeparationLogDataReady();
+            this.SeparationLogDataReady += _logger.SeparationLogDataHandler;
+            this.ConsoleSeparationDataReady += _consolePrinter.ConsoleSeparationDataHandler;
         }
 
         /// <summary>
@@ -57,8 +59,11 @@ namespace ATM.Classes
         {
             this.receiver = receiver;
             this.receiver.TransponderDataReady += ReceiverOnTransponderReady;
+            this.SeparationLogDataReady += _logger.SeparationLogDataHandler;
+            this.ConsoleSeparationDataReady += _consolePrinter.ConsoleSeparationDataHandler;
 
-            _airSpace = airspace;
+
+            _airspace = airspace;
             _condition = condition;
             _consolePrinter = consolePrinter;
             _logger = logger;
@@ -98,22 +103,22 @@ namespace ATM.Classes
                     Tracks.Add(newTrack);
                 }
 
-                _separationChecker = new SeparationChecker(_airSpace,_condition);
-                if (_separationChecker.CheckForSeparation(Tracks, newTrack).Count > 0)
+                List<string> ConflictList = _separationChecker.CheckForSeparation(Tracks, newTrack);
+                _separationChecker = new SeparationChecker(_airspace,_condition);
+                if (ConflictList.Count > 1)
                 {
+                    SeparationLogEventArgs LogArgs = new SeparationLogEventArgs();
+                    LogArgs.ConflictList = ConflictList;
+                    SeparationLogDataReady?.Invoke(this, LogArgs);
+                    ConsoleSeparationEventArgs conArgs = new ConsoleSeparationEventArgs();
+                    ConsoleSeparationDataReady?.Invoke(this, conArgs);
+
 
                 }
             }
 
         }
-
-        public void AddTrack(ITrack track)
-        {
-            if (Tracks.Count == 0)
-            {
-
-            }
-        }
+       
 
         public int CheckIfTrackIsInList(string tag)
         {
@@ -135,7 +140,7 @@ namespace ATM.Classes
         private void dateConverter()
         {
             dateTimeNew = DateTime.ParseExact(datastring[4],"yyyyMMddHHmmssfff",null);
-            Console.WriteLine(dateTimeNew.ToString());
+            
         }
 
         private void TypeConverter()
@@ -144,6 +149,12 @@ namespace ATM.Classes
                 Int32.TryParse(datastring[2], out y);
                 Int32.TryParse(datastring[3], out alt);
                 dateConverter();   
+        }
+
+
+        public void AddTrack(ITrack track)
+        {
+            throw new NotImplementedException();
         }
     }
 }
