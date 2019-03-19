@@ -14,7 +14,7 @@ namespace ATM.Interfaces
 
     public interface ILogger
     {
-        void LogMessage(List<string> involvedTags);
+        void LogMessage(List<Conflict> involvedTags);
         void SeparationLogDataHandler(object sender, SeparationLogEventArgs e);
         
     }

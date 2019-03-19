@@ -33,7 +33,7 @@ namespace ATM.Classes
         {
             this.receiver = receiver;
             this.receiver.TransponderDataReady += ReceiverOnTransponderReady;
-            this.SeparationLogDataReady += _logger.SeparationLogDataHandler;
+            SeparationLogDataReady += _logger.SeparationLogDataHandler;
             this.ConsoleSeparationDataReady += _consolePrinter.ConsoleSeparationDataHandler;
         }
 
