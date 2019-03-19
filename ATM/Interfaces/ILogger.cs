@@ -9,7 +9,7 @@ namespace ATM.Interfaces
 {
     public class SeparationLogEventArgs : EventArgs
     {
-        public List<string> ConflictList { get; set; }
+        public List<Conflict> ConflictList { get; set; }
     }
 
     public interface ILogger

@@ -16,6 +16,7 @@ namespace ATMUnitTest
     [TestFixture]
     public class SeparationCheckerTest
     {
+        /*
         private SeparationChecker _uut;
         [SetUp]
         public void Init()
@@ -171,7 +172,7 @@ namespace ATMUnitTest
         }
 
 
-
+    */
 
 
     }
