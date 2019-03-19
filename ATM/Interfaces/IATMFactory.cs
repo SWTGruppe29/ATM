@@ -7,8 +7,8 @@ using ATM.Classes;
 
 namespace ATM.Interfaces
 {
-    public interface IAbstractATMFactory
+    public interface IATMFactory
     {
-        ConcreteATMFactory CreateAbstractAtmFactory();
+        ATMSystem CreateAtmSystem();
     }
 }

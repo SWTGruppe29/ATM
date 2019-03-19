@@ -14,11 +14,14 @@ namespace ATM.Classes
         
         private DateTime dt1, dt2;
 
+        public TrackCalculator()
+        {
+        }
+
         public TrackCalculator(int Last_x, int Last_y, int New_x, int New_y)
         {
             P1 = new Point(Last_x,Last_y);
             P2 = new Point(New_x,New_y);
-
         }
         
         public double CalculateHorizontalVelocity()

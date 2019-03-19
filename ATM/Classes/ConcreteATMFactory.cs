@@ -9,19 +9,22 @@ using TransponderReceiver;
 
 namespace ATM.Classes
 {
-    public class ConcreteATMFactory : IAbstractATMFactory
-    {
-        public ATMSystem CreateATMSystem()
+    public class ConcreteATMFactory : IATMFactory
+    { 
+        
+        public ATMSystem CreateAtmSystem()
         {
+            var airSpace = new AirSpace(10000, 90000, 90000, 10000, 20000, 500);
+            var separationCondition = new SeparationCondition(300, 5000);
+
             return new ATMSystem(TransponderReceiverFactory.CreateTransponderDataReceiver(),
-                new AirSpace(),
-                new SeparationCondition(),
+                airSpace,
+                separationCondition,
                 new ConsolePrinter(),
                 new Logger(),
                 new TrackCalculator(),
-                new SeparationChecker(),
-                );
-
-    }
+                new SeparationChecker(airSpace, separationCondition)
+            );
+        }
     }
 }
