@@ -33,7 +33,6 @@ namespace ATM.Classes
             foreach (var data in e.TransponderData)
             {
                 List(data);
-                
             }
 
             //makes Track

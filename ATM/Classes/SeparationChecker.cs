@@ -15,11 +15,13 @@ namespace ATM.Classes
         //public enum Direction {north,south,east,west};
         private IAirSpace _airSpace;
         private ICondition _separationCondition;
+        private List<Conflict> _currentConflicts;
         
         public SeparationChecker(IAirSpace airSpace, ICondition separationCondition)
         {
             _airSpace = airSpace;
             _separationCondition = separationCondition;
+            _currentConflicts = new List<Conflict>();
         }
 
         public int AltitudeSeparation(int t1, int t2) 
@@ -276,7 +278,6 @@ namespace ATM.Classes
 
         public bool hasConflict(Track track1, Track track2)
         {
-            
             if (verticalSeparationConflict(track1,track2) & horizontalSeparationConflict(track1, track2))
             {
                 return true;
@@ -284,25 +285,46 @@ namespace ATM.Classes
             return false;
 
         }
-        public List<int> CheckForSeparation(List<Track> tracks, Track track)
+
+        public int conflictExists(Conflict conflict)
         {
-            int index = 0;
-            List<int> indexes = new List<int>();
+            for (int i = 0; i < _currentConflicts.Count; i++)
+            {
+                if (_currentConflicts[i].Tag1 == conflict.Tag1 & _currentConflicts[i].Tag2 == conflict.Tag2)
+                    return i;
+            }
+
+            return -1;
+        }
+
+        public List<Conflict> CheckForSeparation(List<Track> tracks, Track track)
+        {
             foreach (var t in tracks)
             {
                 if (t.Tag != track.Tag)
                 {
                     if (hasConflict(t, track))
                     {
-                        int indexToAdd = index;
-                        indexes.Add(indexToAdd);
+                        Conflict newConflict = new Conflict()
+                        {
+                            Tag1 = t.Tag,
+                            Tag2 = track.Tag
+                        };
+                        int conflictIndex = conflictExists(newConflict);
+                        if (conflictIndex >= 0)
+                        {
+                            _currentConflicts[conflictIndex] = newConflict;
+                        }
+                        else
+                        {
+                            _currentConflicts.Add(newConflict);
+                        }
+
                     }
                 }
-                ++index;
             }
-            return indexes;
+
+            return _currentConflicts;
         }
-
-
     }
 }
