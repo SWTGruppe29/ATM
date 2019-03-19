@@ -57,12 +57,12 @@
   <ItemGroup>
     <Compile Include="Classes\AirSpace.cs" />
     <Compile Include="Classes\ATMSystem.cs" />
-    <Compile Include="Classes\ConcreteAbstractATMFactory.cs" />
+    <Compile Include="Classes\ConcreteATMFactory.cs" />
     <Compile Include="Classes\ConsolePrinter.cs" />
     <Compile Include="Classes\Point.cs" />
     <Compile Include="Classes\SeparationCondition.cs" />
     <Compile Include="Classes\TrackCalculator.cs" />
-    <Compile Include="Interfaces\IAbstractATMFactory.cs" />
+    <Compile Include="Interfaces\IATMFactory.cs" />
     <Compile Include="Interfaces\IAirSpace.cs" />
     <Compile Include="Interfaces\IATMSystem.cs" />
     <Compile Include="Interfaces\ICondition.cs" />

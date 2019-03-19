@@ -8,24 +8,58 @@ using TransponderReceiver;
 
 namespace ATM.Classes
 {
-    public class ATMSystem : IATMSystem, ITrack, IAbstractATMFactory
+    public class ATMSystem : IATMSystem, ITrack
     {
         private List<Track> Tracks;
         private int x, y, alt;
         private TrackCalculator calc;
         private ITransponderReceiver receiver;
         private List<string> datastring;
-        private string flightNum;
-        private DateTime dateTimeNew;
-        private IAirSpace airSpace;
-        private ISeparationChecker checkSepa;
+        private List<object> objectlist;
+
+        private IAirSpace _airspace;
+        private ICondition _condition;
+        private IConsolePrinter _consolePrinter;
+        private ILogger _logger;
+        private ISeparationChecker _separationChecker;
+        private ITrackCalculator _calc;
+        private ITransponderReceiver receiver;
         
 
         public ATMSystem(ITransponderReceiver receiver)
         {
-
             this.receiver = receiver;
             this.receiver.TransponderDataReady += ReceiverOnTransponderReady;
+        }
+
+        /// <summary>
+        /// Receives all of the necesary components to build the ATM System
+        /// </summary>
+        /// <param name="receiver">Receives data from the tracks</param>
+        /// <param name="airspace">Domain class for Airspace bounds</param>
+        /// <param name="condition">Domain class that holds the minimum vertical and horizontal distance</param>
+        /// <param name="consolePrinter">Prints the airplanes to the console</param>
+        /// <param name="logger">Logs the airplanes that are too close</param>
+        /// <param name="track">Domain class that keeps the trackdata</param>
+        /// <param name="trackCalculator">Class that calculates the airplanes speed and course</param>
+        /// <param name="separationChecker">Class to check that airplanes are separated</param>
+        public ATMSystem(ITransponderReceiver receiver, 
+            IAirSpace airspace, 
+            ICondition condition, 
+            IConsolePrinter consolePrinter, 
+            ILogger logger,
+            ITrackCalculator trackCalculator,
+            ISeparationChecker separationChecker)
+        {
+            this.receiver = receiver;
+            this.receiver.TransponderDataReady += ReceiverOnTransponderReady;
+
+            _airspace = airspace;
+            _condition = condition;
+            _consolePrinter = consolePrinter;
+            _logger = logger;
+            _separationChecker = separationChecker;
+            _calc = trackCalculator;
             datastring = new List<string>() {""};
             airSpace = new AirSpace(10000,90000,90000,10000,20000,500);
             //checkSepa = new SeparationChecker(airSpace,);

@@ -29,15 +29,16 @@ namespace ATMUnitTest
                 "612HJ",
                 "12353"
             };
-
-            ConsolePrinter.Print(uutTracks, Tags);
+            ConsolePrinter uut = new ConsolePrinter();
+            uut.Print(uutTracks, Tags);
         }
 
         [Test]
         public void NoTracksInList()
         {
             List<Track> uutTracks = new List<Track>();
-            ConsolePrinter.Print(uutTracks, null);
+            ConsolePrinter uut = new ConsolePrinter();
+            uut.Print(uutTracks, null);
         }
 
 
@@ -52,9 +53,9 @@ namespace ATMUnitTest
                 new Track("5412BJ", 12345, 15312,84393, time1, 154.5433, 1000),
                 new Track("5417KJ", 15445, 15342,84393, time1, 154.233, 987.123)
             };
-
-            ConsolePrinter.Print(uutTracks, null);
+            ConsolePrinter uut = new ConsolePrinter();
+            uut.Print(uutTracks, null);
         }
-
+        
     }
 }

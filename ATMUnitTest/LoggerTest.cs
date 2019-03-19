@@ -8,6 +8,9 @@ using NUnit.Framework;
 
 namespace ATMUnitTest
 {
+
+    // Saves file in ATM\ATMUnitTest\bin\Debug
+
     [TestFixture]
     public class LoggerTest
     {

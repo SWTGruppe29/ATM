@@ -8,12 +8,11 @@ namespace ATM.Classes
     public class ConsolePrinter : IConsolePrinter
     {
         /// <summary>
-        /// Receives a List of tracks currently in the airspace, and tracks in conflict.
-        /// Tracks must have compass
+        /// Receives a List of tracks currently in the airspace, and tracks in conflict by 
         /// </summary>
         /// <param name="tracks">Tracks currently in the airspace</param>
         /// <param name="conflictTags">Tracks in breaking separation condition in the airspace</param>
-        public static void Print(List<Track> tracks, string[] conflictTags)
+        public void Print(List<Track> tracks, string[] conflictTags) 
         {
             //Console.Clear(); //Uncomment this when not unittesting
 
@@ -49,16 +48,6 @@ namespace ATM.Classes
             {
                 Console.WriteLine($"Airplane tag: {tag}");
             }
-        }
-
-        /// <summary>
-        /// Receives a List of tracks currently in the airspace, and tracks in conflict by 
-        /// </summary>
-        /// <param name="tracks">Tracks currently in the airspace</param>
-        /// <param name="conflictTags">Tracks in breaking separation condition in the airspace</param>
-        void IConsolePrinter.Print(List<Track> tracks, string[] conflictTags) //Only declared for making static function
-        {
-            ConsolePrinter.Print(tracks, conflictTags);
         }
     }
 }
