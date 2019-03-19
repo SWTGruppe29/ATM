@@ -11,6 +11,7 @@ namespace ATM.Classes
 {
     public class SeparationChecker : ISeparationChecker
     {
+        /*
         public enum Direction {north,south,east,west};
         private IAirSpace _airSpace;
         private ICondition _separationCondition;
@@ -19,7 +20,7 @@ namespace ATM.Classes
         {
             _airSpace = airSpace;
             _separationCondition = separationCondition;
-        }
+        }*/
 
         public int AltitudeSeparation(int t1, int t2) 
         {
@@ -27,13 +28,13 @@ namespace ATM.Classes
             return sep;
         }
 
-        public double distanceBetween(int x1, int y1, int x2, int y2)
+        public double distanceBetweenTracks(Track track1, Track track2)
         {
-            int dY = Math.Abs(y1 - y2);
-            int dX = Math.Abs(x1 - x2);
+            int dY = Math.Abs(track1.YCoordinate - track2.YCoordinate);
+            int dX = Math.Abs(track1.XCoordinate -track2.XCoordinate);
             return Math.Sqrt((dY * dY) + (dX * dX));
         }
-
+        /*
         public Direction calculateDirection(Track track1)
         {
             if (track1.CurrentCompCourse >= 45 && track1.CurrentCompCourse < 135) //Eastbound course
@@ -254,7 +255,7 @@ namespace ATM.Classes
 
             return false;
 
-        }
+        }*/
 
         public bool horizontalSeparationConflict(Track track1, Track track2)
         {
