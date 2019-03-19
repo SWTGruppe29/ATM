@@ -12,6 +12,7 @@ namespace ATMUnitTest
 
     // Saves file in ATM\ATMUnitTest\bin\Debug
 
+    /*
     [TestFixture]
     public class FactoryTest
     {
@@ -22,4 +23,5 @@ namespace ATMUnitTest
             var system = uut.CreateAtmSystem();
         }
     }
+    */
 }

@@ -57,7 +57,6 @@
   <ItemGroup>
     <Compile Include="Classes\AirSpace.cs" />
     <Compile Include="Classes\ATMSystem.cs" />
-    <Compile Include="Classes\ConcreteAbstractATMFactory.cs" />
     <Compile Include="Classes\Conflict.cs" />
     <Compile Include="Classes\ConsolePrinter.cs" />
     <Compile Include="Classes\Point.cs" />

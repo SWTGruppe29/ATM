@@ -9,6 +9,7 @@ using NUnit.Framework;
 
 namespace ATMUnitTest
 {
+    /*
     [TestFixture]
     public class ConsolePrinterTest
     {
@@ -58,4 +59,5 @@ namespace ATMUnitTest
         }
         
     }
+    */
 }

@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ATM.Classes;
 
 namespace ATM.Interfaces
 {
     public class SeparationLogEventArgs : EventArgs
     {
-        public List<string> ConflictList { get; set; }
+        public List<Conflict> ConflictList { get; set; }
     }
 
     public interface ILogger

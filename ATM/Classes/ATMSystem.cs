@@ -63,7 +63,7 @@ namespace ATM.Classes
             this.ConsoleSeparationDataReady += _consolePrinter.ConsoleSeparationDataHandler;
 
 
-            _airspace = airspace;
+            _airSpace = airspace;
             _condition = condition;
             _consolePrinter = consolePrinter;
             _logger = logger;
@@ -103,8 +103,8 @@ namespace ATM.Classes
                     Tracks.Add(newTrack);
                 }
 
-                List<string> ConflictList = _separationChecker.CheckForSeparation(Tracks, newTrack);
-                _separationChecker = new SeparationChecker(_airspace,_condition);
+                List<Conflict> ConflictList = _separationChecker.CheckForSeparation(Tracks, newTrack);
+                _separationChecker = new SeparationChecker(_airSpace, _condition);
                 if (ConflictList.Count > 1)
                 {
                     SeparationLogEventArgs LogArgs = new SeparationLogEventArgs();
