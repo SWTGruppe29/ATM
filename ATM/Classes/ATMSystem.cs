@@ -19,13 +19,13 @@ namespace ATM.Classes
         private string flightNum;
         private Track newTrack;
 
-        private IAirSpace _airspace;
+        private ITransponderReceiver receiver;
+        private IAirSpace _airSpace;
         private ICondition _condition;
         private IConsolePrinter _consolePrinter;
         private ILogger _logger;
         private ISeparationChecker _separationChecker;
         private ITrackCalculator _calc;
-        private ITransponderReceiver receiver;
 
         public event EventHandler<SeparationLogEventArgs> SeparationLogDataReady;
         public event EventHandler<ConsoleSeparationEventArgs> ConsoleSeparationDataReady;
@@ -70,8 +70,6 @@ namespace ATM.Classes
             _separationChecker = separationChecker;
             _calc = trackCalculator;
             datastring = new List<string>() {""};
-            _airspace = new AirSpace(10000,90000,90000,10000,20000,500);
-            //checkSepa = new SeparationChecker(airSpace,);
         }
 
 
@@ -81,14 +79,13 @@ namespace ATM.Classes
             foreach (var data in e.TransponderData)
             {
                 List(data);
-                
             }
             
             //Converts datastring to separate variables and appropiate types.
             TypeConverter();
 
 
-            if (_airspace.IsInAirSpace(x, y))
+            if (_airSpace.IsInAirSpace(x, y))
             {
                 int index = CheckIfTrackIsInList(flightNum);
                 if (index > 0)
@@ -148,12 +145,10 @@ namespace ATM.Classes
 
         private void TypeConverter()
         {
-
                 Int32.TryParse(datastring[1], out x);
                 Int32.TryParse(datastring[2], out y);
                 Int32.TryParse(datastring[3], out alt);
-                dateConverter();
-            
+                dateConverter();   
         }
 
 

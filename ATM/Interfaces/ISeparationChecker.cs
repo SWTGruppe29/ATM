@@ -9,6 +9,6 @@ namespace ATM.Interfaces
 {
     public interface ISeparationChecker
     {
-        List<string> CheckForSeparation(List<Track> tracks, Track track);
+        List<Conflict> CheckForSeparation(List<Track> tracks, Track track);
     }
 }

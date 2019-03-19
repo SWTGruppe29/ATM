@@ -23,7 +23,7 @@ namespace ATMUnitTest
 
             List<string> tags = new List<string>() {"5B3123", "34123B"};
 
-            uut.LogMessage(time, tags);
+            uut.LogMessage(tags);
         }
 
         [Test]
@@ -35,7 +35,7 @@ namespace ATMUnitTest
 
             List<string> tags = new List<string>() { "5B3123", "34123B", "64BJ92"};
 
-            uut.LogMessage(time, tags);
+            uut.LogMessage(tags);
         }
     }
 }
