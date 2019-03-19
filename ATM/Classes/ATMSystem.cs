@@ -11,12 +11,14 @@ namespace ATM.Classes
     public class ATMSystem : IATMSystem, ITrack, IAbstractATMFactory
     {
         private List<Track> Tracks;
+        private int x, y, alt;
         private TrackCalculator calc;
         private ITransponderReceiver receiver;
-        private AirSpace airspace;
         private List<string> datastring;
-        private List<object> objectlist;
-        
+        private string flightNum;
+        private DateTime dateTimeNew;
+        private IAirSpace airSpace;
+        private ISeparationChecker checkSepa;
         
 
         public ATMSystem(ITransponderReceiver receiver)
@@ -24,7 +26,9 @@ namespace ATM.Classes
 
             this.receiver = receiver;
             this.receiver.TransponderDataReady += ReceiverOnTransponderReady;
-
+            datastring = new List<string>() {""};
+            airSpace = new AirSpace(10000,90000,90000,10000,20000,500);
+            //checkSepa = new SeparationChecker(airSpace,);
         }
 
         private void ReceiverOnTransponderReady(object sender, RawTransponderDataEventArgs e)
@@ -35,35 +39,73 @@ namespace ATM.Classes
                 List(data);
                 
             }
-
-            //makes Track
             
+            //Converts datastring to separate variables and appropiate types.
+            TypeConverter();
+
+
+            if (airSpace.IsInAirSpace(x, y))
+            {
+                int index = CheckIfTrackIsInList(flightNum);
+                if (index > 0)
+                {
+
+                    calc = new TrackCalculator(Tracks[index].XCoordinate, Tracks[index].YCoordinate, x, y,
+                        Tracks[index].LastDateUpdate, dateTimeNew);
+                    Track newTrack = new Track(flightNum, x, y, alt, dateTimeNew, calc.CalculateCompassCourse(),
+                        calc.CalculateHorizontalVelocity());
+                    Tracks[index] = newTrack;
+                }
+                else
+                {
+                    Track newTrack = new Track(flightNum, x, y, alt, dateTimeNew);
+                    Tracks.Add(newTrack);
+                }
+
+                
+            }
+
         }
 
         public void AddTrack(ITrack track)
         {
-            Tracks.Add(null);
+            if (Tracks.Count == 0)
+            {
+
+            }
         }
 
-        
+        public int CheckIfTrackIsInList(string tag)
+        {
+            for (int i = 0; i < Tracks.Count; i++)
+            {
+                if (Tracks[i].Tag == tag)
+                    return i;
+            }
 
-        public void List(string s)
+            return -1;
+        }
+
+        private void List(string s)
         {
             datastring = s.Split(';').Reverse().ToList<string>();
             datastring.Reverse();
         }
 
-        public void TypeConverter()
+        private void dateConverter()
         {
-            objectlist[0] = datastring[0];
-            Int32.TryParse(datastring[1], out int x);
-            objectlist[1] = x;
-            Int32.TryParse(datastring[2], out int y);
-            objectlist[2] = y;
-            Int32.TryParse(datastring[2], out int alt);
-            objectlist[3] = alt;
+            dateTimeNew = DateTime.ParseExact(datastring[4],"yyyyMMddHHmmssfff",null);
+            Console.WriteLine(dateTimeNew.ToString());
+        }
 
+        private void TypeConverter()
+        {
 
+                Int32.TryParse(datastring[1], out x);
+                Int32.TryParse(datastring[2], out y);
+                Int32.TryParse(datastring[3], out alt);
+                dateConverter();
+            
         }
         
 
