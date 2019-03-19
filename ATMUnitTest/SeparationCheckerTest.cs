@@ -157,6 +157,19 @@ namespace ATMUnitTest
             Assert.That(conflicts.Contains(0), Is.EqualTo(false));
         }
 
+        [Test]
+        public void SeparationChecker_CheckForSeparation_DoesntConflictWithSelf()
+        {
+            List<Track> tracks = new List<Track>()
+            {
+                new Track("abc123", 2000, 50000, 20000, DateTime.Now),
+                new Track("ABCeg", 200, 20000, 1000, DateTime.Now)
+            };
+            Track newTrack = new Track("abc123", 2000, 51000,20000, DateTime.Now);
+            List<int> conflicts = _uut.CheckForSeparation(tracks, newTrack);
+            Assert.That(conflicts.Contains(0), Is.EqualTo(false));
+        }
+
 
 
 
