@@ -18,13 +18,26 @@ namespace ATMApplication
 
         public static void Main(string[] args)
         {
+            ConcreteATMFactory ATMfactory = new ConcreteATMFactory();
             var receiver = TransponderReceiverFactory.CreateTransponderDataReceiver();
-            var system = new ATM.Classes.ATMSystem(receiver);
+
+            var airSpace = new AirSpace(10000, 90000, 90000, 10000, 20000, 500);
+            var separationCondition = new SeparationCondition(300, 5000);
+
+            var consolePrinter = new ConsolePrinter();
+            var logger = new Logger();
+            var trackCalc = new TrackCalculator();
+            var spChecker = new SeparationChecker(airSpace, separationCondition);
+
+            ATMSystem atm = new ATMSystem(receiver, airSpace,separationCondition,consolePrinter,logger,trackCalc,spChecker);
+
 
             while (true)
             {
-                Thread.Sleep(5000);
+                
+
             }
+            
         }
     }
 }

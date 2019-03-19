@@ -13,8 +13,7 @@ namespace ATM.Classes
         private List<Track> Tracks;
         private int x, y, alt;
         private TrackCalculator calc;
-        private List<string> datastring;
-        private List<object> objectlist;
+        public List<string> datastring;
         private DateTime dateTimeNew;
         private string flightNum;
         private Track newTrack;
@@ -57,10 +56,7 @@ namespace ATM.Classes
             ITrackCalculator trackCalculator,
             ISeparationChecker separationChecker)
         {
-            this.receiver = receiver;
-            this.receiver.TransponderDataReady += ReceiverOnTransponderReady;
-            this.SeparationLogDataReady += _logger.SeparationLogDataHandler;
-            this.ConsoleSeparationDataReady += _consolePrinter.ConsoleSeparationDataHandler;
+            
 
 
             _airSpace = airspace;
@@ -69,7 +65,11 @@ namespace ATM.Classes
             _logger = logger;
             _separationChecker = separationChecker;
             _calc = trackCalculator;
-            datastring = new List<string>() {""};
+            datastring = new List<string>();
+            this.receiver = receiver;
+            this.receiver.TransponderDataReady += ReceiverOnTransponderReady;
+            this.SeparationLogDataReady += _logger.SeparationLogDataHandler;
+            this.ConsoleSeparationDataReady += _consolePrinter.ConsoleSeparationDataHandler;
         }
 
 
@@ -79,10 +79,18 @@ namespace ATM.Classes
             foreach (var data in e.TransponderData)
             {
                 List(data);
+               
             }
-            
+
+            for (int i = 0; i < datastring.Count; i++)
+            {
+                Console.WriteLine(datastring[i]);
+                Console.WriteLine("\n");
+            }
+
+
             //Converts datastring to separate variables and appropiate types.
-            TypeConverter();
+            //TypeConverter();
 
 
             if (_airSpace.IsInAirSpace(x, y))
@@ -103,17 +111,25 @@ namespace ATM.Classes
                     Tracks.Add(newTrack);
                 }
 
-                List<Conflict> ConflictList = _separationChecker.CheckForSeparation(Tracks, newTrack);
+                List<Conflict> conflictList = _separationChecker.CheckForSeparation(Tracks, newTrack);
                 _separationChecker = new SeparationChecker(_airSpace, _condition);
-                if (ConflictList.Count > 1)
+                if (conflictList.Count > 1)
                 {
                     SeparationLogEventArgs LogArgs = new SeparationLogEventArgs();
-                    LogArgs.ConflictList = ConflictList;
+                    LogArgs.ConflictList = conflictList;
                     SeparationLogDataReady?.Invoke(this, LogArgs);
                     ConsoleSeparationEventArgs conArgs = new ConsoleSeparationEventArgs();
                     ConsoleSeparationDataReady?.Invoke(this, conArgs);
 
 
+                }
+            }
+            else
+            {
+                int index = CheckIfTrackIsInList(flightNum);
+                if (index >= 0)
+                {
+                    Tracks.RemoveAt(index);
                 }
             }
 
@@ -133,8 +149,10 @@ namespace ATM.Classes
 
         private void List(string s)
         {
+            
             datastring = s.Split(';').Reverse().ToList<string>();
             datastring.Reverse();
+            
         }
 
         private void dateConverter()
@@ -145,16 +163,11 @@ namespace ATM.Classes
 
         private void TypeConverter()
         {
-                Int32.TryParse(datastring[1], out x);
-                Int32.TryParse(datastring[2], out y);
-                Int32.TryParse(datastring[3], out alt);
-                dateConverter();   
+            int.TryParse(datastring[1], out x);
+            int.TryParse(datastring[2], out y);
+            int.TryParse(datastring[3], out alt);
+            dateConverter();
         }
 
-
-        public void AddTrack(ITrack track)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
