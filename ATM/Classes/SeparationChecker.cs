@@ -284,23 +284,23 @@ namespace ATM.Classes
             return false;
 
         }
-        public List<int> CheckForSeparation(List<Track> tracks, Track track)
+        public List<string> CheckForSeparation(List<Track> tracks, Track track)
         {
             int index = 0;
-            List<int> indexes = new List<int>();
+            List<string> tags = new List<string>();
+            tags.Add(track.Tag);
             foreach (var t in tracks)
             {
                 if (t.Tag != track.Tag)
                 {
                     if (hasConflict(t, track))
                     {
-                        int indexToAdd = index;
-                        indexes.Add(indexToAdd);
+                        tags.Add(t.Tag);
                     }
                 }
                 ++index;
             }
-            return indexes;
+            return tags;
         }
 
 

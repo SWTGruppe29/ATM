@@ -24,6 +24,8 @@ namespace ATM.Classes
             //Combine the path and .txt file 
             string fullPath = Path.Combine(ProjectDirectory, "SeparationLog.txt");
 
+            
+
             //Pass the filepath and filename to the StreamWriter Constructor
             using (StreamWriter writeText = new StreamWriter(fullPath, append: true))
             {

@@ -13,9 +13,11 @@ namespace ATM.Classes
         private List<Track> Tracks;
         private int x, y, alt;
         private TrackCalculator calc;
-        private ITransponderReceiver receiver;
         private List<string> datastring;
         private List<object> objectlist;
+        private DateTime dateTimeNew;
+        private string flightNum;
+        private Track newTrack;
 
         private IAirSpace _airspace;
         private ICondition _condition;
@@ -61,7 +63,7 @@ namespace ATM.Classes
             _separationChecker = separationChecker;
             _calc = trackCalculator;
             datastring = new List<string>() {""};
-            airSpace = new AirSpace(10000,90000,90000,10000,20000,500);
+            _airspace = new AirSpace(10000,90000,90000,10000,20000,500);
             //checkSepa = new SeparationChecker(airSpace,);
         }
 
@@ -78,7 +80,7 @@ namespace ATM.Classes
             TypeConverter();
 
 
-            if (airSpace.IsInAirSpace(x, y))
+            if (_airspace.IsInAirSpace(x, y))
             {
                 int index = CheckIfTrackIsInList(flightNum);
                 if (index > 0)
@@ -86,7 +88,7 @@ namespace ATM.Classes
 
                     calc = new TrackCalculator(Tracks[index].XCoordinate, Tracks[index].YCoordinate, x, y,
                         Tracks[index].LastDateUpdate, dateTimeNew);
-                    Track newTrack = new Track(flightNum, x, y, alt, dateTimeNew, calc.CalculateCompassCourse(),
+                    newTrack = new Track(flightNum, x, y, alt, dateTimeNew, calc.CalculateCompassCourse(),
                         calc.CalculateHorizontalVelocity());
                     Tracks[index] = newTrack;
                 }
@@ -96,7 +98,11 @@ namespace ATM.Classes
                     Tracks.Add(newTrack);
                 }
 
-                
+                _separationChecker = new SeparationChecker(_airspace,_condition);
+                if (_separationChecker.CheckForSeparation(Tracks, newTrack).Count > 0)
+                {
+
+                }
             }
 
         }
