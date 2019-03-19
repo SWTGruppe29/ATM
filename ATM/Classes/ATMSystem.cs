@@ -13,17 +13,16 @@ namespace ATM.Classes
         private List<Track> Tracks;
         private int x, y, alt;
         private TrackCalculator calc;
-        private ITransponderReceiver receiver;
         private List<string> datastring;
         private List<object> objectlist;
 
-        private IAirSpace _airspace;
+        private ITransponderReceiver receiver;
+        private IAirSpace _airSpace;
         private ICondition _condition;
         private IConsolePrinter _consolePrinter;
         private ILogger _logger;
         private ISeparationChecker _separationChecker;
         private ITrackCalculator _calc;
-        private ITransponderReceiver receiver;
         
 
         public ATMSystem(ITransponderReceiver receiver)
@@ -54,14 +53,13 @@ namespace ATM.Classes
             this.receiver = receiver;
             this.receiver.TransponderDataReady += ReceiverOnTransponderReady;
 
-            _airspace = airspace;
+            _airSpace = airspace;
             _condition = condition;
             _consolePrinter = consolePrinter;
             _logger = logger;
             _separationChecker = separationChecker;
             _calc = trackCalculator;
             datastring = new List<string>() {""};
-            airSpace = new AirSpace(10000,90000,90000,10000,20000,500);
             //checkSepa = new SeparationChecker(airSpace,);
         }
 
@@ -78,7 +76,7 @@ namespace ATM.Classes
             TypeConverter();
 
 
-            if (airSpace.IsInAirSpace(x, y))
+            if (_airSpace.IsInAirSpace(x, y))
             {
                 int index = CheckIfTrackIsInList(flightNum);
                 if (index > 0)

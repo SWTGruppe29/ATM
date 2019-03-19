@@ -8,6 +8,6 @@ namespace ATM.Interfaces
 {
     public interface ILogger
     {
-        void LogMessage(DateTime occurenceTime, List<string> involvedTags);
+        void LogMessage(List<string> involvedTags);
     }
 }
