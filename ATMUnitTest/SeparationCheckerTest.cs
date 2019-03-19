@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using ATM.Classes;
@@ -8,6 +9,7 @@ using ATM.Interfaces;
 using Castle.Core.Internal;
 using NSubstitute;
 using NUnit.Framework;
+using NUnit.Framework.Internal;
 
 namespace ATMUnitTest
 {
@@ -39,44 +41,124 @@ namespace ATMUnitTest
         }
 
 
+        [Test]
+        public void HorizontalDistanceBetweeenTracks_CheckForCorrectDistance()
+        {
+            Track track1 = new Track("abc123",200,5000,1000,DateTime.Now);
+            Track track2 = new Track("ABCeg", 200,7000,1000,DateTime.Now);
+            Assert.That(_uut.distanceBetweenTracks(track1, track2), Is.EqualTo(2000));
+        }
+
+        [Test]
+        public void HorizontalDistanceBetweeenTracks_CheckForCorrectDistance2()
+        {
+            Track track1 = new Track("abc123", 200, 10000, 10000, DateTime.Now);
+            Track track2 = new Track("ABCeg", 200, 0, 0, DateTime.Now);
+            Assert.That(_uut.distanceBetweenTracks(track1, track2), Is.EqualTo(Math.Sqrt((10000*10000)*2)));
+        }
+
+        [Test]
+        public void SeparationChecker_HorizontalSeparationConflict_ReturnsTrue()
+        {
+            Track track1 = new Track("abc123", 200, 5000, 1000, DateTime.Now);
+            Track track2 = new Track("ABCeg", 200, 7000, 1000, DateTime.Now);
+            Assert.That(_uut.horizontalSeparationConflict(track1, track2), Is.EqualTo(true));
+        }
+        [Test]
+        public void SeparationChecker_HorizontalSeparationConflict_ReturnsTrue2()
+        {
+            Track track1 = new Track("abc123", 200, 3000, 2000, DateTime.Now);
+            Track track2 = new Track("ABCeg", 200, 6000, 1000, DateTime.Now);
+            Assert.That(_uut.horizontalSeparationConflict(track1, track2), Is.EqualTo(true));
+        }
+
+        [Test]
+        public void SeparationChecker_HorizontalSeparationConflict_ReturnsFalse()
+        {
+            Track track1 = new Track("abc123", 200, 50000, 10000, DateTime.Now);
+            Track track2 = new Track("ABCeg", 200, 7000, 1000, DateTime.Now);
+            Assert.That(_uut.horizontalSeparationConflict(track1, track2), Is.EqualTo(false));
+        }
+
+        [Test]
+        public void SeparationChecker_VerticalSeparationConflict_ReturnsTrue()
+        {
+            Track track1 = new Track("abc123", 300, 50000, 10000, DateTime.Now);
+            Track track2 = new Track("ABCeg", 200, 7000, 10000, DateTime.Now);
+            Assert.That(_uut.verticalSeparationConflict(track1,track2),Is.EqualTo(true));
+        }
+
+        [Test]
+        public void SeparationChecker_VerticalSeparationConflict_ReturnsFalse()
+        {
+            Track track1 = new Track("abc123", 1000, 50000, 20000, DateTime.Now);
+            Track track2 = new Track("ABCeg", 200, 7000, 1000, DateTime.Now);
+            Assert.That(_uut.verticalSeparationConflict(track1, track2), Is.EqualTo(false));
+        }
+
 
         #endregion
 
-
         [Test]
-        public void CheckIfTracksConflict_CourseAndSpeedNotInitialized_ListLengthIs0()
+        public void SeparationChecker_hasConflict_ReturnsTrue()
         {
-            Track newTrack = new Track("adfv32",2300,41092,70000,DateTime.Now);
-            List<Track> tracks = new List<Track>
-            {
-                new Track("ABD21",2000,40000,40000,DateTime.Now),
-                new Track("abda232",1200,4002,50000,DateTime.Now)
-            };
-            Assert.That(_uut.CheckForSeparation(tracks, newTrack).IsNullOrEmpty(), Is.EqualTo(true));
+            Track track1 = new Track("abc123", 300, 5000, 2000, DateTime.Now, 320,1000);
+            Track track2 = new Track("ABCeg", 200, 7000, 1000, DateTime.Now,320,1000);
+            Assert.That(_uut.hasConflict(track1, track2), Is.EqualTo(true));
         }
 
         [Test]
-        public void CheckIfTracksConflict_CoursesDontConflict_ListLength0()
+        public void SeparationChecker_hasConflict_HorizontalButNotVertical_ReturnsFalse()
         {
-            Track newTrack = new Track("adfv32", 2100, 0, 20000, DateTime.Now,90,1000);
-            List<Track> tracks = new List<Track>
+            Track track1 = new Track("abc123", 1500, 5000, 2000, DateTime.Now);
+            Track track2 = new Track("ABCeg", 300, 7000, 1000, DateTime.Now);
+            Assert.That(_uut.hasConflict(track1, track2), Is.EqualTo(false));
+        }
+
+        [Test]
+        public void SeparationChecker_hasConflict_VerticalButNotHorizontal_ReturnsFalse()
+        {
+            Track track1 = new Track("abc123", 300, 10000, 40000, DateTime.Now);
+            Track track2 = new Track("ABCeg", 200, 80000, 10000, DateTime.Now);
+            Assert.That(_uut.hasConflict(track1, track2), Is.EqualTo(false));
+        }
+
+        [Test]
+        public void SeparationChecker_hasConflict_HorizontalNorVertical_ReturnsFalse()
+        {
+            Track track1 = new Track("abc123", 2000, 50000, 20000, DateTime.Now);
+            Track track2 = new Track("ABCeg", 200, 200000, 1000, DateTime.Now);
+            Assert.That(_uut.hasConflict(track1, track2), Is.EqualTo(false));
+        }
+
+        [Test]
+        public void SeparationChecker_CheckForSeparation_ContainsExpectedConflict()
+        {
+            List<Track> tracks = new List<Track>()
             {
-                new Track("ABD21",2000,40000,40000,DateTime.Now,270,1000)
+                new Track("abc123", 2000, 50000, 20000, DateTime.Now),
+                new Track("ABCeg", 200, 20000, 1000, DateTime.Now)
             };
-            Assert.That(_uut.CheckForSeparation(tracks, newTrack).IsNullOrEmpty, Is.EqualTo(true));
+            Track newTrack = new Track("abfasd",350,21000,3000,DateTime.Now);
+            List<int> conflicts = _uut.CheckForSeparation(tracks, newTrack);
+            Assert.That(conflicts.Contains(1),Is.EqualTo(true));
+        }
+
+        [Test]
+        public void SeparationChecker_CheckForSeparation_DoesntContainUnexpectedConflict()
+        {
+            List<Track> tracks = new List<Track>()
+            {
+                new Track("abc123", 2000, 50000, 20000, DateTime.Now),
+                new Track("ABCeg", 200, 20000, 1000, DateTime.Now)
+            };
+            Track newTrack = new Track("abfasd", 350, 21000, 3000, DateTime.Now);
+            List<int> conflicts = _uut.CheckForSeparation(tracks, newTrack);
+            Assert.That(conflicts.Contains(0), Is.EqualTo(false));
         }
 
 
-        /*[Test]
-        public void CheckIfTracksConflict_1CourseIntersects_ListLength1()
-        {
-            Track newTrack = new Track("adfv32", 2100, 0, 20000, DateTime.Now, 90, 1000);
-            List<Track> tracks = new List<Track>
-            {
-                new Track("ABD21",2000,40000,40000,DateTime.Now,180,1000)
-            };
-            Assert.That(_uut.CheckForSeparation(tracks, newTrack).Count, Is.EqualTo(1));
-        }*/
+
 
 
     }

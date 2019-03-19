@@ -11,16 +11,16 @@ namespace ATM.Classes
 {
     public class SeparationChecker : ISeparationChecker
     {
-        /*
-        public enum Direction {north,south,east,west};
+        
+        //public enum Direction {north,south,east,west};
         private IAirSpace _airSpace;
         private ICondition _separationCondition;
-
+        
         public SeparationChecker(IAirSpace airSpace, ICondition separationCondition)
         {
             _airSpace = airSpace;
             _separationCondition = separationCondition;
-        }*/
+        }
 
         public int AltitudeSeparation(int t1, int t2) 
         {
@@ -259,36 +259,30 @@ namespace ATM.Classes
 
         public bool horizontalSeparationConflict(Track track1, Track track2)
         {
-            if (distanceBetween(track1.XCoordinate, track1.YCoordinate, track2.XCoordinate, track2.YCoordinate) < //Checks for current distance between tracks
-            _separationCondition.getHorizontalSeparationCondition())
+            if (distanceBetweenTracks(track1, track2) <= //Checks for current distance between tracks
+                _separationCondition.getHorizontalSeparationCondition())
             {
                 return true;
             }
-            else if (willHaveConflict(track1, track2))
-            {
-                return true;
-            }
-
             return false;
+        }
+
+        public bool verticalSeparationConflict(Track track1, Track track2)
+        {
+            return (AltitudeSeparation(track1.Altitude, track2.Altitude) <=
+                    _separationCondition.getVerticalSeparationCondition());
         }
 
 
         public bool hasConflict(Track track1, Track track2)
         {
-            if (track1.CurrentCompCourse == null | track1.Velocity == null | track2.Velocity == null |
-                track2.CurrentCompCourse == null)                                                       //No information on current course or velocity
+            
+            if (verticalSeparationConflict(track1,track2) & horizontalSeparationConflict(track1, track2))
             {
-                return false;
+                return true;
             }
-            else
-            {
-                if ((AltitudeSeparation(track1.Altitude, track2.Altitude) > _separationCondition.getVerticalSeparationCondition()) && horizontalSeparationConflict(track1, track2))
-                {
-                    return true;
-                }
+            return false;
 
-                return false;
-            }
         }
         public List<int> CheckForSeparation(List<Track> tracks, Track track)
         {
@@ -304,10 +298,8 @@ namespace ATM.Classes
                         indexes.Add(indexToAdd);
                     }
                 }
-
                 ++index;
             }
-
             return indexes;
         }
 

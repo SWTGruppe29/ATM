@@ -9,23 +9,23 @@ namespace ATM.Classes
 {
     public class SeparationCondition : ICondition
     {
-        private int verticalSeparationCondition;
-        private int horizontalSeparationCondition;
+        private int _verticalSeparationCondition;
+        private int _horizontalSeparationCondition;
 
-        public SeparationCondition(int v, int h)
+        public SeparationCondition(int verticalSeparationCondition, int horizontalSeparationCondition)
         {
-            verticalSeparationCondition = v;
-            horizontalSeparationCondition = h;
+            _verticalSeparationCondition = verticalSeparationCondition;
+            _horizontalSeparationCondition = horizontalSeparationCondition;
         }
 
         public int getVerticalSeparationCondition()
         {
-            return verticalSeparationCondition;
+            return _verticalSeparationCondition;
         }
 
         public int getHorizontalSeparationCondition()
         {
-            return horizontalSeparationCondition;
+            return _horizontalSeparationCondition;
         }
     }
 }
