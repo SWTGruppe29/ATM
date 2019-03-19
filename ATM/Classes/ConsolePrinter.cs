@@ -49,5 +49,10 @@ namespace ATM.Classes
                 Console.WriteLine($"Airplane tag: {tag}");
             }
         }
+
+        public void ConsoleSeparationDataHandler(object sender, ConsoleSeparationEventArgs args)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

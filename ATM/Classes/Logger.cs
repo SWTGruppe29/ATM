@@ -45,5 +45,10 @@ namespace ATM.Classes
                 writeText.WriteLine();
             }
         }
+
+        public void SeparationLogDataHandler(object sender, SeparationLogEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
