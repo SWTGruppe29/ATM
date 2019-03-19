@@ -286,15 +286,29 @@ namespace ATM.Classes
 
         }
 
-        public int conflictExists(Conflict conflict)
+        /*public List<int> conflictExists(Conflict conflict)
         {
+            List<int> conflictIndexes = new List<int>();
             for (int i = 0; i < _currentConflicts.Count; i++)
             {
                 if (_currentConflicts[i].Tag1 == conflict.Tag1 & _currentConflicts[i].Tag2 == conflict.Tag2)
-                    return i;
+                    conflictIndexes.Add(i);
             }
 
-            return -1;
+            if (conflictIndexes.Count == 0)
+                return null;
+            return conflictIndexes;
+        }*/
+
+        public void RemoveAllConflictsWithTag(string tag)
+        {
+            for (int i = 0; i < _currentConflicts.Count; i++)
+            {
+                if (_currentConflicts[i].Tag1 == tag | _currentConflicts[i].Tag2 == tag)
+                {
+                    _currentConflicts.RemoveAt(i);
+                }
+            }
         }
 
         public List<Conflict> CheckForSeparation(List<Track> tracks, Track track)
@@ -303,6 +317,7 @@ namespace ATM.Classes
             {
                 if (t.Tag != track.Tag)
                 {
+                    RemoveAllConflictsWithTag(track.Tag);
                     if (hasConflict(t, track))
                     {
                         Conflict newConflict = new Conflict()
@@ -310,20 +325,11 @@ namespace ATM.Classes
                             Tag1 = t.Tag,
                             Tag2 = track.Tag
                         };
-                        int conflictIndex = conflictExists(newConflict);
-                        if (conflictIndex >= 0)
-                        {
-                            _currentConflicts[conflictIndex] = newConflict;
-                        }
-                        else
-                        {
-                            _currentConflicts.Add(newConflict);
-                        }
-
+                        
+                     _currentConflicts.Add(newConflict);
                     }
                 }
             }
-
             return _currentConflicts;
         }
     }
