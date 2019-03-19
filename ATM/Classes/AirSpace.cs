@@ -25,7 +25,6 @@ namespace ATM.Classes
             southBoundary = s;
             upperBoundary = u;
             lowerBoundary = l;
-
         }
 
         public bool IsInAirSpace(int x, int y)
