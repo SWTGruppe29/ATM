@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ATM.Classes;
 
 namespace ATM.Interfaces
 {
@@ -13,7 +14,7 @@ namespace ATM.Interfaces
 
     public interface ILogger
     {
-        void LogMessage(List<string> involvedTags);
+        void LogMessage(List<Conflict> involvedTags);
         void SeparationLogDataHandler(object sender, SeparationLogEventArgs e);
         
     }

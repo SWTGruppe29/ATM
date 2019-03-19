@@ -12,7 +12,7 @@ namespace ATM.Classes
         /// </summary>
         /// <param name="tracks">Tracks currently in the airspace</param>
         /// <param name="conflictTags">Tracks in breaking separation condition in the airspace</param>
-        public void Print(List<Track> tracks, List<string> conflictTags) 
+        public void Print(List<Track> tracks, List<Conflict> conflictTags) 
         {
             //Console.Clear(); //Uncomment this when not unittesting
 
@@ -43,14 +43,13 @@ namespace ATM.Classes
                 return;
             }
 
-            //foreach(conflict in conflicts)
-            //{
-            //    Console.WriteLine("Airplanes in conflict");
+            foreach(var conflict in conflictTags)
+            {
+                Console.WriteLine("Airplanes in conflict");
                 
-            //    Console.WriteLine($"Airplane tag: {con}");
-            //    Console.WriteLine($"Airplane tag: {tag}");
-                
-            //}
+                Console.WriteLine($"Airplane tag: {conflict.Tag1}");
+                Console.WriteLine($"Airplane tag: {conflict.Tag2}");    
+            }
         }
 
         public void ConsoleSeparationDataHandler(object sender, ConsoleSeparationEventArgs args)

@@ -16,7 +16,7 @@ namespace ATM.Classes
         /// </summary>
         /// <param name="occurenceTime">DateTime parameter of time of occurence</param>
         /// <param name="involvedTags">List of the involved tracks by tag name</param>
-        public void LogMessage( List<string> involvedTags)
+        public void LogMessage( List<Conflict> involvedTags)
         {
             //Find the path of the project
             string ProjectDirectory = System.AppContext.BaseDirectory;
@@ -26,30 +26,28 @@ namespace ATM.Classes
             string fullPath = Path.Combine(ProjectDirectory, "SeparationLog" + timeStamp + ".txt");
 
             var occurenceTime = DateTime.Now;
-
-            int counter = 1;
-
-            while (counter < involvedTags.Count)
-            {
-                ++counter;
+            
                 //Pass the filepath and filename to the StreamWriter Constructor
                 using (StreamWriter writeText = new StreamWriter(fullPath, append: true))
                 {
+                    foreach (var tag in involvedTags)
+                    {
                     writeText.WriteLine($"Time of occurence:  " +
-                                        $"{occurenceTime.Year}/" +
-                                        $"{occurenceTime.Month}/" +
-                                        $"{occurenceTime.Day} " +
-                                        $"{occurenceTime.Hour}:" +
-                                        $"{occurenceTime.Minute}:" +
-                                        $"{occurenceTime.Second}." +
-                                        $"{occurenceTime.Millisecond}");
+                                            $"{occurenceTime.Year}/" +
+                                            $"{occurenceTime.Month}/" +
+                                            $"{occurenceTime.Day} " +
+                                            $"{occurenceTime.Hour}:" +
+                                            $"{occurenceTime.Minute}:" +
+                                            $"{occurenceTime.Second}." +
+                                            $"{occurenceTime.Millisecond}");
 
-                    writeText.WriteLine($"Track involved - Tag: {involvedTags[0]}");
-                    writeText.WriteLine($"Track involved - Tag: {involvedTags[counter - 1]}");
-                    
-                    writeText.WriteLine();
+                        writeText.WriteLine($"Track involved - Tag: {tag.Tag1}");
+                        writeText.WriteLine($"Track involved - Tag: {tag.Tag2}");
+
+                        writeText.WriteLine();
+                    }
                 }
-            }
+            
         }
 
         public void SeparationLogDataHandler(object sender, SeparationLogEventArgs e)
