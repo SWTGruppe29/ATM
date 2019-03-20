@@ -302,22 +302,27 @@ namespace ATM.Classes
 
         public void RemoveAllConflictsWithTag(string tag)
         {
-            for (int i = 0; i < _currentConflicts.Count; i++)
+            List<Conflict> conflictsToRemove = new List<Conflict>();
+            foreach (var conflict in _currentConflicts)
             {
-                if (_currentConflicts[i].Tag1 == tag | _currentConflicts[i].Tag2 == tag)
+                if (conflict.Tag1 == tag | conflict.Tag2 == tag)
                 {
-                    _currentConflicts.RemoveAt(i);
+                    conflictsToRemove.Add(conflict);
                 }
+            }
+            foreach (var conflict in conflictsToRemove)
+            {
+                _currentConflicts.Remove(conflict);
             }
         }
 
         public List<Conflict> CheckForSeparation(List<Track> tracks, Track track)
         {
+            RemoveAllConflictsWithTag(track.Tag);
             foreach (var t in tracks)
             {
                 if (t.Tag != track.Tag)
                 {
-                    RemoveAllConflictsWithTag(track.Tag);
                     if (hasConflict(t, track))
                     {
                         Conflict newConflict = new Conflict()
