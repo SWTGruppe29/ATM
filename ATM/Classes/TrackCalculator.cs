@@ -34,7 +34,8 @@ namespace ATM.Classes
             distance = Distance();
             TimeSpan tsSpan = _dt2.Subtract(_dt1);
 
-            return distance/tsSpan.TotalSeconds;
+            return Trim(distance/tsSpan.TotalSeconds);
+
         }
 
         public double CalculateCompassCourse()
