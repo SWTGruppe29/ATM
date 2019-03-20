@@ -29,13 +29,12 @@ namespace ATMApplication
             var trackCalc = new TrackCalculator();
             var spChecker = new SeparationChecker(airSpace, separationCondition);
 
-            ATMSystem atm = new ATMSystem(receiver, airSpace,separationCondition,consolePrinter,logger,trackCalc,spChecker);
+            ATMSystem atm = new ATM.Classes.ATMSystem(receiver, airSpace,separationCondition,consolePrinter,logger,trackCalc,spChecker);
 
 
             while (true)
             {
                 
-
             }
             
         }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,7 +11,7 @@ namespace ATM.Classes
 {
     public class ATMSystem : IATMSystem, ITrack
     {
-        private List<Track> Tracks;
+        private List<Track> Tracks = new List<Track>();
         private int x, y, alt;
         private TrackCalculator calc;
         public List<string> datastring;
@@ -26,6 +27,7 @@ namespace ATM.Classes
         private ISeparationChecker _separationChecker;
         private ITrackCalculator _calc;
 
+        List<Conflict> _conflictList = new List<Conflict>();
         public event EventHandler<SeparationLogEventArgs> SeparationLogDataReady;
         public event EventHandler<ConsoleSeparationEventArgs> ConsoleSeparationDataReady;
 
@@ -33,7 +35,7 @@ namespace ATM.Classes
         {
             this.receiver = receiver;
             this.receiver.TransponderDataReady += ReceiverOnTransponderReady;
-            SeparationLogDataReady += _logger.SeparationLogDataHandler;
+            this.SeparationLogDataReady += _logger.SeparationLogDataHandler;
             this.ConsoleSeparationDataReady += _consolePrinter.ConsoleSeparationDataHandler;
         }
 
@@ -75,64 +77,76 @@ namespace ATM.Classes
 
         private void ReceiverOnTransponderReady(object sender, RawTransponderDataEventArgs e)
         {
-            //Receive data, calls list foreach.
-            foreach (var data in e.TransponderData)
+            if (e.TransponderData.Count > 0)
             {
-                List(data);
-               
-            }
-
-            for (int i = 0; i < datastring.Count; i++)
-            {
-                Console.WriteLine(datastring[i]);
-                Console.WriteLine("\n");
-            }
+                //Receive data, calls list foreach.
+                foreach (var data in e.TransponderData)
+                {
+                    List(data);
 
 
-            //Converts datastring to separate variables and appropiate types.
-            //TypeConverter();
+
+                    /*for (int i = 0; i < datastring.Count; i++)
+                    {
+                        Console.Write(datastring[i]);
+                        Console.Write(';');
+                    }
+                    Console.WriteLine("\n");
+                    */
+
+                    //Converts datastring to separate variables and appropiate types.
+                    TypeConverter();
 
 
-            if (_airSpace.IsInAirSpace(x, y))
+            if (_airSpace.IsInAirSpace(x, y,alt))
             {
                 int index = CheckIfTrackIsInList(flightNum);
                 if (index > 0)
                 {
 
-                    calc = new TrackCalculator(Tracks[index].XCoordinate, Tracks[index].YCoordinate, x, y,
-                        Tracks[index].LastDateUpdate, dateTimeNew);
-                    newTrack = new Track(flightNum, x, y, alt, dateTimeNew, calc.CalculateCompassCourse(),
-                        calc.CalculateHorizontalVelocity());
-                    Tracks[index] = newTrack;
+                            calc = new TrackCalculator(Tracks[index].XCoordinate, Tracks[index].YCoordinate, x, y,
+                                Tracks[index].LastDateUpdate, dateTimeNew);
+                            newTrack = new Track(flightNum, x, y, alt, dateTimeNew, calc.CalculateCompassCourse(),
+                                calc.CalculateHorizontalVelocity());
+                            Tracks.Insert(index,newTrack);
+                            
+                        }
+                        else
+                        {
+                            newTrack = new Track(flightNum, x, y, alt, dateTimeNew);
+                            Tracks.Add(newTrack);
+                        }
+
+                        _conflictList = _separationChecker.CheckForSeparation(Tracks, newTrack);
+                        _separationChecker = new SeparationChecker(_airSpace, _condition);
+                        if (_conflictList.Count > 1)
+                        {
+                            SeparationLogEventArgs LogArgs = new SeparationLogEventArgs();
+                            LogArgs.ConflictList = _conflictList;
+                            SeparationLogDataReady?.Invoke(this, LogArgs);
+                            
+
+
+                        }
+
+                    }
+                    else
+                    {
+                        int index = CheckIfTrackIsInList(flightNum);
+                        if (index >= 0)
+                        {
+                            Tracks.RemoveAt(index);
+                        }
+                    }
                 }
-                else
+
+                ConsoleSeparationEventArgs conArgs = new ConsoleSeparationEventArgs()
                 {
-                    Track newTrack = new Track(flightNum, x, y, alt, dateTimeNew);
-                    Tracks.Add(newTrack);
-                }
-
-                List<Conflict> conflictList = _separationChecker.CheckForSeparation(Tracks, newTrack);
-                _separationChecker = new SeparationChecker(_airSpace, _condition);
-                if (conflictList.Count > 1)
-                {
-                    SeparationLogEventArgs LogArgs = new SeparationLogEventArgs();
-                    LogArgs.ConflictList = conflictList;
-                    SeparationLogDataReady?.Invoke(this, LogArgs);
-                    ConsoleSeparationEventArgs conArgs = new ConsoleSeparationEventArgs();
-                    ConsoleSeparationDataReady?.Invoke(this, conArgs);
-
-
-                }
+                    conflictList = _conflictList,
+                    tracks = Tracks
+                };
+                ConsoleSeparationDataReady?.Invoke(this, conArgs);
             }
-            else
-            {
-                int index = CheckIfTrackIsInList(flightNum);
-                if (index >= 0)
-                {
-                    Tracks.RemoveAt(index);
-                }
-            }
-
         }
        
 
@@ -163,6 +177,7 @@ namespace ATM.Classes
 
         private void TypeConverter()
         {
+            flightNum = datastring[0];
             int.TryParse(datastring[1], out x);
             int.TryParse(datastring[2], out y);
             int.TryParse(datastring[3], out alt);
