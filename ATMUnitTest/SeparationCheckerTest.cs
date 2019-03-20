@@ -16,7 +16,7 @@ namespace ATMUnitTest
     [TestFixture]
     public class SeparationCheckerTest
     {
-        /*
+        
         private SeparationChecker _uut;
         [SetUp]
         public void Init()
@@ -141,8 +141,8 @@ namespace ATMUnitTest
                 new Track("ABCeg", 200, 20000, 1000, DateTime.Now)
             };
             Track newTrack = new Track("abfasd",350,21000,3000,DateTime.Now);
-            List<int> conflicts = _uut.CheckForSeparation(tracks, newTrack);
-            Assert.That(conflicts.Contains(1),Is.EqualTo(true));
+            List<Conflict> conflicts = _uut.CheckForSeparation(tracks, newTrack);
+            Assert.That(conflicts.Count,Is.EqualTo(1));
         }
 
         [Test]
@@ -153,9 +153,9 @@ namespace ATMUnitTest
                 new Track("abc123", 2000, 50000, 20000, DateTime.Now),
                 new Track("ABCeg", 200, 20000, 1000, DateTime.Now)
             };
-            Track newTrack = new Track("abfasd", 350, 21000, 3000, DateTime.Now);
-            List<int> conflicts = _uut.CheckForSeparation(tracks, newTrack);
-            Assert.That(conflicts.Contains(0), Is.EqualTo(false));
+            Track newTrack = new Track("abfasd", 350, 2000, 3000, DateTime.Now);
+            List<Conflict> conflicts = _uut.CheckForSeparation(tracks, newTrack);
+            Assert.That(conflicts.Count, Is.EqualTo(0));
         }
 
         [Test]
@@ -167,13 +167,57 @@ namespace ATMUnitTest
                 new Track("ABCeg", 200, 20000, 1000, DateTime.Now)
             };
             Track newTrack = new Track("abc123", 2000, 51000,20000, DateTime.Now);
-            List<int> conflicts = _uut.CheckForSeparation(tracks, newTrack);
-            Assert.That(conflicts.Contains(0), Is.EqualTo(false));
+            List<Conflict> conflicts = _uut.CheckForSeparation(tracks, newTrack);
+            Assert.That(conflicts.Count, Is.EqualTo(0));
         }
 
+        [Test]
+        public void SeparationChecker_CheckForSeparation_ContainsThreeConflicts()
+        {
+            List<Track> tracks = new List<Track>()
+            {
+                new Track("abazxc3", 2000, 50000, 20000, DateTime.Now),
+                new Track("ABCeg", 2100, 49000, 23000, DateTime.Now),
+                new Track("asfawe",2025,48000,19000, DateTime.Now)
+            };
+            Track newTrack = new Track("abc123", 2000, 51000, 20000, DateTime.Now);
+            List<Conflict> conflicts = _uut.CheckForSeparation(tracks, newTrack);
+            Assert.That(conflicts.Count, Is.EqualTo(3));
+        }
 
-    */
+        [Test]
+        public void SeparationChecker_CheckForSeparation_DoesntDuplicateConflict()
+        {
+            List<Track> tracks = new List<Track>()
+            {
+                new Track("abazxc3", 2000, 50000, 20000, DateTime.Now),
+                new Track("ABCeg", 2100, 49000, 23000, DateTime.Now),
+                new Track("asfawe",2025,48000,19000, DateTime.Now)
+            };
+            Track newTrack = new Track("abc123", 2000, 51000, 20000, DateTime.Now);
+            List<Conflict> conflicts = _uut.CheckForSeparation(tracks, newTrack);
+            Track newTrackUpdated = new Track("abc123",2100,52000,22000,DateTime.Now);
+            conflicts = _uut.CheckForSeparation(tracks, newTrackUpdated);
+            Assert.That(conflicts.Count,Is.EqualTo(3));
+        }
 
-
+        [Test]
+        public void SeparationChecker_CheckForSeparation_NonConflictsRemovedAfterUpdate()
+        {
+            List<Track> tracks = new List<Track>()
+            {
+                new Track("abazxc3", 2000, 50000, 20000, DateTime.Now),
+                new Track("ABCeg", 2100, 49000, 23000, DateTime.Now),
+                new Track("asfawe",2025,48000,19000, DateTime.Now)
+            };
+            Track newTrack = new Track("abc123", 2000, 51000, 20000, DateTime.Now);
+            List<Conflict> conflicts = _uut.CheckForSeparation(tracks, newTrack);
+            Track newTrackUpdated = new Track("abc123", 2100, 52000, 22000, DateTime.Now);
+            tracks[0].YCoordinate = 50000;
+            tracks[0].XCoordinate = 80000;
+            conflicts = _uut.CheckForSeparation(tracks, newTrackUpdated);
+            Assert.That(conflicts.Count, Is.EqualTo(2));
+        }
+        
     }
 }

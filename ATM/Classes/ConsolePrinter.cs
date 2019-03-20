@@ -37,7 +37,6 @@ namespace ATM.Classes
                     {
                     Console.Write($" Horizontal Velocity: {track.Velocity} " +
                                       $"Compass Course: {track.CurrentCompCourse}");
-                                     
                     }
                     Console.WriteLine();
             }
