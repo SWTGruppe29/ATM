@@ -14,10 +14,10 @@ namespace ATM.Classes
         /// <param name="conflictTags">Tracks in breaking separation condition in the airspace</param>
         public void Print(List<Track> tracks, List<Conflict> conflictTags) 
         {
-            //Console.Clear(); //Uncomment this when not unittesting
+            Console.Clear(); //Uncomment this when not unittesting
 
 
-            if (!tracks.Any())
+            if (tracks.Count == 0)
             {
                 Console.WriteLine("No airplanes currently in the airspace");
                 return;
@@ -27,13 +27,17 @@ namespace ATM.Classes
 
             foreach (var track in tracks)
             {
-                if (track.Velocity != null && track.CurrentCompCourse != null) //Only display if it has velocity and compcourse
-                    Console.WriteLine($"Flight tag: {track.Tag} " +
-                                      $"X: {track.XCoordinate} " +
+                
+                    Console.WriteLine($"Flight tag: " + track.Tag +
+                                      $" X: {track.XCoordinate} " +
                                       $"Y: {track.YCoordinate} " +
-                                      $"Altitude: {track.Altitude} " +
-                                      $"Horizontal Velocity: {track.Velocity} " +
+                                      $"Altitude: {track.Altitude}");
+                    if (track.CurrentCompCourse != null && track.Velocity != null)
+                    {
+                    Console.WriteLine($"Horizontal Velocity: {track.Velocity} " +
                                       $"Compass Course: {track.CurrentCompCourse}");
+                                     
+                    }
             }
             Console.WriteLine();
 
