@@ -24,22 +24,24 @@ namespace ATM.Classes
             }
 
             Console.WriteLine("Airplane Tracks currently in the airspace:");
+            Console.WriteLine(tracks.Count);
 
             foreach (var track in tracks)
             {
                 
-                    Console.WriteLine($"Flight tag: " + track.Tag +
+                    Console.Write($"Flight tag: " + track.Tag +
                                       $" X: {track.XCoordinate} " +
                                       $"Y: {track.YCoordinate} " +
                                       $"Altitude: {track.Altitude}");
                     if (track.CurrentCompCourse != null && track.Velocity != null)
                     {
-                    Console.WriteLine($"Horizontal Velocity: {track.Velocity} " +
+                    Console.Write($" Horizontal Velocity: {track.Velocity} " +
                                       $"Compass Course: {track.CurrentCompCourse}");
                                      
                     }
+                    Console.WriteLine();
             }
-            Console.WriteLine();
+            
 
             if (conflictTags.Count == 0)
             {

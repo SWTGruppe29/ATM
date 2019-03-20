@@ -84,60 +84,50 @@ namespace ATM.Classes
                 {
                     List(data);
 
-
-
-                    /*for (int i = 0; i < datastring.Count; i++)
-                    {
-                        Console.Write(datastring[i]);
-                        Console.Write(';');
-                    }
-                    Console.WriteLine("\n");
-                    */
-
                     //Converts datastring to separate variables and appropiate types.
                     TypeConverter();
 
 
-            if (_airSpace.IsInAirSpace(x, y,alt))
-            {
-                int index = CheckIfTrackIsInList(flightNum);
-                if (index > 0)
-                {
+                        if (_airSpace.IsInAirSpace(x, y,alt)==true)
+                        {
+                            int index = CheckIfTrackIsInList(flightNum);
+                            if (index >= 0)
+                            {
 
                             calc = new TrackCalculator(Tracks[index].XCoordinate, Tracks[index].YCoordinate, x, y,
                                 Tracks[index].LastDateUpdate, dateTimeNew);
                             newTrack = new Track(flightNum, x, y, alt, dateTimeNew, calc.CalculateCompassCourse(),
                                 calc.CalculateHorizontalVelocity());
-                            Tracks.Insert(index,newTrack);
-                            
-                        }
-                        else
-                        {
+                            Tracks[index] = newTrack;
+
+                            }
+                            else
+                            {
                             newTrack = new Track(flightNum, x, y, alt, dateTimeNew);
                             Tracks.Add(newTrack);
-                        }
+                            }
 
-                        _conflictList = _separationChecker.CheckForSeparation(Tracks, newTrack);
-                        _separationChecker = new SeparationChecker(_airSpace, _condition);
-                        if (_conflictList.Count > 1)
-                        {
+                            _conflictList = _separationChecker.CheckForSeparation(Tracks, newTrack);
+                            _separationChecker = new SeparationChecker(_airSpace, _condition);
+                            if (_conflictList.Count > 1)
+                            {
                             SeparationLogEventArgs LogArgs = new SeparationLogEventArgs();
                             LogArgs.ConflictList = _conflictList;
                             SeparationLogDataReady?.Invoke(this, LogArgs);
                             
 
 
-                        }
+                            }
 
-                    }
-                    else
-                    {
-                        int index = CheckIfTrackIsInList(flightNum);
-                        if (index >= 0)
-                        {
-                            Tracks.RemoveAt(index);
                         }
-                    }
+                        else
+                        {
+                            int index = CheckIfTrackIsInList(flightNum);
+                            if (index >= 0)
+                            {
+                            Tracks.RemoveAt(index);
+                            }
+                        }
                 }
 
                 ConsoleSeparationEventArgs conArgs = new ConsoleSeparationEventArgs()
@@ -146,6 +136,7 @@ namespace ATM.Classes
                     tracks = Tracks
                 };
                 ConsoleSeparationDataReady?.Invoke(this, conArgs);
+                
             }
         }
        

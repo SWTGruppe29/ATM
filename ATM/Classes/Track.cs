@@ -18,7 +18,7 @@ namespace ATM.Classes
         public DateTime LastDateUpdate { get; set; }
 
 
-        public Track(string tag, int altitude, int x, int y, DateTime trackTime)
+        public Track(string tag, int x, int y, int altitude, DateTime trackTime)
         {
             Tag = tag;
             Altitude = altitude;
@@ -27,7 +27,7 @@ namespace ATM.Classes
             LastDateUpdate = trackTime;
         }
 
-        public Track(string tag, int altitude, int x, int y, DateTime trackTime, double compass, double velocity)
+        public Track(string tag, int x, int y, int altitude, DateTime trackTime, double compass, double velocity)
         {
             Tag = tag;
             Altitude = altitude;
