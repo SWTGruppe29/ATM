@@ -35,7 +35,6 @@ namespace ATMApplication
             while (true)
             {
                 
-
             }
             
         }

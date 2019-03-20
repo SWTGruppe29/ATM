@@ -98,11 +98,11 @@ namespace ATM.Classes
                     TypeConverter();
 
 
-                    if (_airSpace.IsInAirSpace(x, y))
-                    {
-                        int index = CheckIfTrackIsInList(flightNum);
-                        if (index >= 0)
-                        {
+            if (_airSpace.IsInAirSpace(x, y,alt))
+            {
+                int index = CheckIfTrackIsInList(flightNum);
+                if (index > 0)
+                {
 
                             calc = new TrackCalculator(Tracks[index].XCoordinate, Tracks[index].YCoordinate, x, y,
                                 Tracks[index].LastDateUpdate, dateTimeNew);
