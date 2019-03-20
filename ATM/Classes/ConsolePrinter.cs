@@ -28,16 +28,16 @@ namespace ATM.Classes
             foreach (var track in tracks)
             {
                 
-                    Console.WriteLine($"Flight tag: " + track.Tag +
-                                      $" X: {track.XCoordinate} " +
-                                      $"Y: {track.YCoordinate} " +
-                                      $"Altitude: {track.Altitude}");
+                    Console.Write($"Flight tag: " + track.Tag +
+                                      $" X:{track.XCoordinate} " +
+                                      $"Y:{track.YCoordinate} " +
+                                      $"Altitude:{track.Altitude} ");
                     if (track.CurrentCompCourse != null && track.Velocity != null)
                     {
                     Console.WriteLine($"Horizontal Velocity: {track.Velocity} " +
                                       $"Compass Course: {track.CurrentCompCourse}");
-                                     
                     }
+                    else Console.WriteLine();
             }
             Console.WriteLine();
 
