@@ -32,8 +32,8 @@ namespace ATM.Classes
 
         public double distanceBetweenTracks(Track track1, Track track2)
         {
-            int dY = Math.Abs(track1.YCoordinate - track2.YCoordinate);
-            int dX = Math.Abs(track1.XCoordinate -track2.XCoordinate);
+            double dY = Math.Abs(track1.YCoordinate - track2.YCoordinate);
+            double dX = Math.Abs(track1.XCoordinate -track2.XCoordinate);
             return Math.Sqrt((dY * dY) + (dX * dX));
         }
         /*
