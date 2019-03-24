@@ -9,7 +9,7 @@ using TransponderReceiver;
 
 namespace ATM.Classes
 {
-    public class ATMSystem : IATMSystem, ITrack
+    public class ATMSystem : IATMSystem
     {
         private List<Track> Tracks = new List<Track>();
         private int x, y, alt;
@@ -19,7 +19,7 @@ namespace ATM.Classes
         private string flightNum;
         private Track newTrack;
 
-        private ITransponderReceiver receiver;
+        public ITransponderReceiver receiver;
         private IAirSpace _airSpace;
         private ICondition _condition;
         private IConsolePrinter _consolePrinter;
@@ -31,9 +31,17 @@ namespace ATM.Classes
         public event EventHandler<SeparationLogEventArgs> SeparationLogDataReady;
         public event EventHandler<ConsoleSeparationEventArgs> ConsoleSeparationDataReady;
 
-        public ATMSystem(ITransponderReceiver receiver)
-        {
-            this.receiver = receiver;
+        public ATMSystem(IATMFactory factory, ITransponderReceiver transponderReceiver)
+        {   
+            //Calling factory methods
+            receiver = transponderReceiver;
+            _airSpace = factory.CreateAirSpace();
+            _condition = factory.CreateCondition();
+            _consolePrinter = factory.CreateConsolePrinter();
+            _logger = factory.CreateLogger();
+            _separationChecker = factory.CreateSeparationChecker();
+
+            //Subscribing to events
             this.receiver.TransponderDataReady += ReceiverOnTransponderReady;
             this.SeparationLogDataReady += _logger.SeparationLogDataHandler;
             this.ConsoleSeparationDataReady += _consolePrinter.ConsoleSeparationDataHandler;
@@ -75,7 +83,7 @@ namespace ATM.Classes
         }
 
 
-        private void ReceiverOnTransponderReady(object sender, RawTransponderDataEventArgs e)
+        public void ReceiverOnTransponderReady(object sender, RawTransponderDataEventArgs e)
         {
             if (e.TransponderData.Count > 0)
             {

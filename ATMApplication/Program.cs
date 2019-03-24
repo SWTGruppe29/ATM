@@ -19,7 +19,7 @@ namespace ATMApplication
         public static void Main(string[] args)
         {
             ConcreteATMFactory ATMfactory = new ConcreteATMFactory();
-            ATMSystem atm = ATMfactory.CreateAtmSystem();
+            ATMSystem atm = new ATMSystem(ATMfactory, TransponderReceiverFactory.CreateTransponderDataReceiver());
 
 
 

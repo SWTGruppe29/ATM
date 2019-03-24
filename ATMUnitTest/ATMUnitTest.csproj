@@ -58,9 +58,14 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="TransponderReceiver, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\TransponderReceiver.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AirSpaceTest.cs" />
+    <Compile Include="ATMSystemUnitTests.cs" />
     <Compile Include="ConsolePrinterTest.cs" />
     <Compile Include="FactoryTest.cs" />
     <Compile Include="LoggerTest.cs" />

@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
-using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
 using ATM.Interfaces;
 using TransponderReceiver;
+using NSubstitute;
 
 namespace ATM.Classes
 {
-    public class ConcreteATMFactory : IATMFactory
+    public class ATMTestFactory: IATMFactory
     {
         public IAirSpace CreateAirSpace()
         {
@@ -19,7 +18,7 @@ namespace ATM.Classes
 
         public ICondition CreateCondition()
         {
-            return new SeparationCondition(5000,300);
+            return new SeparationCondition(5000, 300);
         }
 
         public IConsolePrinter CreateConsolePrinter()
@@ -34,12 +33,7 @@ namespace ATM.Classes
 
         public ISeparationChecker CreateSeparationChecker()
         {
-            return new SeparationChecker(CreateAirSpace(),CreateCondition());
-        }
-
-        public ITransponderReceiver CreateTransponderReceiver()
-        {
-            return TransponderReceiverFactory.CreateTransponderDataReceiver();
+            return new SeparationChecker(CreateAirSpace(), CreateCondition());
         }
     }
 }
