@@ -18,7 +18,7 @@ namespace ATM.Classes
 
         public ICondition CreateCondition()
         {
-            return new SeparationCondition(5000, 300);
+            return new SeparationCondition(300, 5000);
         }
 
         public IConsolePrinter CreateConsolePrinter()

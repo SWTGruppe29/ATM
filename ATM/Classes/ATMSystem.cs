@@ -116,16 +116,7 @@ namespace ATM.Classes
                             }
 
                             _conflictList = _separationChecker.CheckForSeparation(Tracks, newTrack);
-                            _separationChecker = new SeparationChecker(_airSpace, _condition);
-                            if (_conflictList.Count > 1)
-                            {
-                            SeparationLogEventArgs LogArgs = new SeparationLogEventArgs();
-                            LogArgs.ConflictList = _conflictList;
-                            SeparationLogDataReady?.Invoke(this, LogArgs);
-                            
-
-
-                            }
+                            //_separationChecker = new SeparationChecker(_airSpace, _condition);
 
                         }
                         else
@@ -137,6 +128,10 @@ namespace ATM.Classes
                             }
                         }
                 }
+
+                SeparationLogEventArgs logArgs = new SeparationLogEventArgs();
+                logArgs.ConflictList = _conflictList;
+                SeparationLogDataReady?.Invoke(this, logArgs);
 
                 ConsoleSeparationEventArgs conArgs = new ConsoleSeparationEventArgs()
                 {

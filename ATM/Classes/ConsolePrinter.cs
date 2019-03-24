@@ -14,7 +14,7 @@ namespace ATM.Classes
         /// <param name="conflictTags">Tracks in breaking separation condition in the airspace</param>
         public void Print(List<Track> tracks, List<Conflict> conflictTags) 
         {
-            Console.Clear(); //Uncomment this when not unittesting
+            //Console.Clear(); //Uncomment this when not unittesting
 
 
             if (tracks.Count == 0)
