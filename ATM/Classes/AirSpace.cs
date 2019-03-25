@@ -34,7 +34,5 @@ namespace ATM.Classes
             else
                 return false;
         }
-
-
     }
 }

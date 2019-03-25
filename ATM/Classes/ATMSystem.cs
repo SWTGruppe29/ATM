@@ -47,40 +47,7 @@ namespace ATM.Classes
             this.ConsoleSeparationDataReady += _consolePrinter.ConsoleSeparationDataHandler;
         }
 
-        /// <summary>
-        /// Receives all of the necesary components to build the ATM System
-        /// </summary>
-        /// <param name="receiver">Receives data from the tracks</param>
-        /// <param name="airspace">Domain class for Airspace bounds</param>
-        /// <param name="condition">Domain class that holds the minimum vertical and horizontal distance</param>
-        /// <param name="consolePrinter">Prints the airplanes to the console</param>
-        /// <param name="logger">Logs the airplanes that are too close</param>
-        /// <param name="track">Domain class that keeps the trackdata</param>
-        /// <param name="trackCalculator">Class that calculates the airplanes speed and course</param>
-        /// <param name="separationChecker">Class to check that airplanes are separated</param>
-        public ATMSystem(ITransponderReceiver receiver, 
-            IAirSpace airspace, 
-            ICondition condition, 
-            IConsolePrinter consolePrinter, 
-            ILogger logger,
-            ITrackCalculator trackCalculator,
-            ISeparationChecker separationChecker)
-        {
-            
-
-
-            _airSpace = airspace;
-            _condition = condition;
-            _consolePrinter = consolePrinter;
-            _logger = logger;
-            _separationChecker = separationChecker;
-            _calc = trackCalculator;
-            datastring = new List<string>();
-            this.receiver = receiver;
-            this.receiver.TransponderDataReady += ReceiverOnTransponderReady;
-            this.SeparationLogDataReady += _logger.SeparationLogDataHandler;
-            this.ConsoleSeparationDataReady += _consolePrinter.ConsoleSeparationDataHandler;
-        }
+        
 
 
         public void ReceiverOnTransponderReady(object sender, RawTransponderDataEventArgs e)
