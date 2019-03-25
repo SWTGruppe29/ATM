@@ -15,10 +15,6 @@ namespace ATM.Classes
         private double distance;
         private DateTime _dt1, _dt2;
 
-        public TrackCalculator()
-        {
-        }
-
         public TrackCalculator(int Last_x, int Last_y, int New_x, int New_y , DateTime dt1, DateTime dt2)
         {
             P1 = new Point(Last_x,Last_y);
