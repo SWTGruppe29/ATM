@@ -36,10 +36,5 @@ namespace ATM.Classes
         {
             return new SeparationChecker(CreateAirSpace(),CreateCondition());
         }
-
-        public ITransponderReceiver CreateTransponderReceiver()
-        {
-            return TransponderReceiverFactory.CreateTransponderDataReceiver();
-        }
     }
 }
