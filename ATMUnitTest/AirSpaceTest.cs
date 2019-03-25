@@ -25,7 +25,7 @@ namespace ATMUnitTest
         [TestCase(11000,80000,700)]
         public void AirSpaceTest_IsInAirSpace_TestsReturnTrue(int x, int y, int alt)
         {
-            bool result = _uut.IsInAirSpace(x, y, alt);
+            var result = _uut.IsInAirSpace(x, y, alt);
             Assert.That(result,Is.EqualTo(true));
         }
 
@@ -35,7 +35,7 @@ namespace ATMUnitTest
         [TestCase(24000,52000,3000)]
         public void AirSpaceTest_IsInAirSpace_TestsReturnFalse(int x, int y, int alt)
         {
-            bool result = _uut.IsInAirSpace(x, y, alt);
+            var result = _uut.IsInAirSpace(x, y, alt);
             Assert.That(result,Is.EqualTo(false));
         }
 

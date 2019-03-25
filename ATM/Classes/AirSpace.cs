@@ -35,34 +35,6 @@ namespace ATM.Classes
                 return false;
         }
 
-        public int getWestBoundary()
-        {
-            return westBoundary;
-        }
 
-        public int getEastBoundary()
-        {
-            return eastBoundary;
-        }
-
-        public int getNorthBoundary()
-        {
-            return northBoundary;
-        }
-
-        public int getSouthBoundary()
-        {
-            return southBoundary;
-        }
-
-        public int getUpperBoundary()
-        {
-            return upperBoundary;
-        }
-
-        public int getLowerBoundary()
-        {
-            return lowerBoundary;
-        }
     }
 }
