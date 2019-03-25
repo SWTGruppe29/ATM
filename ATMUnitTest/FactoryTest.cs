@@ -20,7 +20,8 @@ namespace ATMUnitTest
         [Test]
         public void InstantiateFactory()
         {
-            var ATMSystem = new ATMSystem(new ConcreteATMFactory(), TransponderReceiverFactory.CreateTransponderDataReceiver());
+            var uut = new ATMSystem(new ConcreteATMFactory(), TransponderReceiverFactory.CreateTransponderDataReceiver());
+            Assert.NotNull(uut);
         }
     }
     
