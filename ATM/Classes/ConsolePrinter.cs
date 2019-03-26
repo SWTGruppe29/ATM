@@ -15,51 +15,74 @@ namespace ATM.Classes
         public void Print(List<Track> tracks, List<Conflict> conflictTags) 
         {
             //Console.Clear(); //Uncomment this when not unittesting
-
-
-            if (tracks.Count == 0)
-            {
-                Console.WriteLine("No airplanes currently in the airspace");
-                return;
-            }
-
-            Console.WriteLine("Airplane Tracks currently in the airspace:");
-            Console.WriteLine(tracks.Count);
-
-            foreach (var track in tracks)
-            {
-                
-                    Console.Write($"Flight tag: " + track.Tag +
-                                      $" X: {track.XCoordinate} " +
-                                      $"Y: {track.YCoordinate} " +
-                                      $"Altitude: {track.Altitude}");
-                    if (track.CurrentCompCourse != null && track.Velocity != null)
-                    {
-                    Console.Write($" Horizontal Velocity: {track.Velocity} " +
-                                      $"Compass Course: {track.CurrentCompCourse}");
-                    }
-                    Console.WriteLine();
-            }
             
-
-            if (conflictTags.Count == 0)
-            {
-                Console.WriteLine("No Airplanes in conflict");
+            if (!PrintTracks(tracks))
                 return;
-            }
-
-            foreach(var conflict in conflictTags)
-            {
-                Console.WriteLine("Airplanes in conflict");
-                
-                Console.WriteLine($"Airplane tag: {conflict.Tag1}");
-                Console.WriteLine($"Airplane tag: {conflict.Tag2}");    
-            }
+            
+            printConflicts(conflictTags);
         }
 
         public void ConsoleSeparationDataHandler(object sender, ConsoleSeparationEventArgs args)
         {
             Print(args.tracks, args.conflictList);
+        }
+
+        /// <summary>
+        /// Returns false if no airplanes was in conflict, else true
+        /// </summary>
+        /// <param name="conflictTags"></param>
+        /// <returns></returns>
+        public bool printConflicts(List<Conflict> conflictTags)
+        {
+            if (conflictTags.Count == 0)
+            {
+                Console.WriteLine("No Airplanes in conflict");
+                return false;
+            }
+
+            foreach (var conflict in conflictTags)
+            {
+                Console.WriteLine("Airplanes in conflict");
+
+                Console.WriteLine($"Airplane tag: {conflict.Tag1}");
+                Console.WriteLine($"Airplane tag: {conflict.Tag2}");
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Returns false if no airplanes was in the airspace
+        /// </summary>
+        /// <param name="tracks"></param>
+        /// <returns></returns>
+        public bool PrintTracks(List<Track> tracks)
+        {
+            if (!tracks.Any())
+            {
+                Console.WriteLine("No airplanes currently in the airspace");
+                return false;
+            }
+
+            Console.Write("Airplane Tracks currently in the airspace: ");
+            Console.WriteLine(tracks.Count);
+
+            foreach (var track in tracks)
+            {
+
+                Console.Write($"Flight tag: " + track.Tag +
+                              $" X: {track.XCoordinate} " +
+                              $"Y: {track.YCoordinate} " +
+                              $"Altitude: {track.Altitude}");
+                if (track.CurrentCompCourse != null && track.Velocity != null)
+                {
+                    Console.Write($" Horizontal Velocity: {track.Velocity} " +
+                                  $"Compass Course: {track.CurrentCompCourse}");
+                }
+                Console.WriteLine();
+            }
+
+            return true;
         }
     }
 }
